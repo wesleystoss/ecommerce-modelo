@@ -19,22 +19,22 @@ if ($carrinho) {
     $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 ?>
-<main class="flex-1 container mx-auto p-4">
-    <h2 class="text-xl font-semibold mb-4">Produtos no Carrinho</h2>
+<main class="flex-1 container mx-auto p-4 md:p-8">
+    <h2 class="text-3xl font-bold mb-8 text-gray-900">Seu Carrinho</h2>
     <?php if ($produtos): ?>
-        <ul class="mb-4">
+        <ul class="mb-8 grid grid-cols-1 md:grid-cols-2 gap-6">
             <?php foreach ($produtos as $produto): ?>
-                <li class="mb-2 flex justify-between items-center bg-white p-2 rounded shadow">
-                    <span><?php echo htmlspecialchars($produto['nome']); ?></span>
-                    <span class="font-bold text-green-600">R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></span>
+                <li class="flex justify-between items-center bg-white p-6 rounded-2xl shadow-md border border-gray-100">
+                    <span class="font-semibold text-lg text-gray-900"><?php echo htmlspecialchars($produto['nome']); ?></span>
+                    <span class="font-bold text-blue-600 text-xl">R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></span>
                 </li>
             <?php endforeach; ?>
         </ul>
-        <form method="post" action="?rota=carrinho&finalizar=1">
-            <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Finalizar Compra</button>
+        <form method="post" action="?rota=carrinho&finalizar=1" class="flex justify-end">
+            <button type="submit" class="bg-green-500 text-white px-8 py-3 rounded-full font-bold hover:bg-green-600 transition shadow">Finalizar Compra</button>
         </form>
     <?php else: ?>
-        <p class="text-gray-700">Seu carrinho está vazio.</p>
+        <p class="text-gray-700 text-lg">Seu carrinho está vazio.</p>
     <?php endif; ?>
 </main>
 <?php include __DIR__ . '/partials/footer.php'; ?> 
