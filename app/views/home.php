@@ -3,6 +3,7 @@ require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../app/models/Configuracao.php';
 require_once __DIR__ . '/../../app/models/Produto.php';
 require_once __DIR__ . '/../../app/models/Faq.php';
+require_once __DIR__ . '/../../app/models/PaginasConfig.php';
 $db = getDB();
 $config = Configuracao::get($db);
 $banners = $db->query('SELECT * FROM banners WHERE ativo = 1 ORDER BY ordem ASC, id DESC')->fetchAll(PDO::FETCH_ASSOC);
@@ -17,6 +18,8 @@ $mais_vendidos = $db->query('SELECT * FROM produtos ORDER BY RANDOM() LIMIT 6')-
 
 // Buscar produtos em promoção reais do banco
 $promocoes = Produto::promocoes($db, 4);
+
+$hero_vh = PaginasConfig::get($db, 'home', 'hero_vh') ?? '70';
 
 function produto_image($produto) {
     if (!empty($produto['imagem'])) {
@@ -49,15 +52,15 @@ function produto_image($produto) {
     <?php include __DIR__ . '/partials/header.php'; ?>
     <main class="flex-1">
         <!-- Hero Carrossel Fullscreen -->
-        <section class="w-full h-[70vh] min-h-[300px] relative overflow-hidden hero-carousel bg-white">
+        <section class="w-full h-[<?php echo $hero_vh; ?>vh] min-h-[300px] relative overflow-hidden hero-carousel bg-white">
             <?php foreach ($banners as $i => $banner): ?>
                 <?php if (!empty($banner['link'])): ?>
                     <a href="<?php echo htmlspecialchars($banner['link']); ?>" target="_blank" class="carousel-slide block w-full h-full absolute top-0 left-0 transition-opacity duration-700 <?php echo $i === 0 ? 'opacity-100 z-20' : 'opacity-0 z-10'; ?>">
-                        <img src="<?php echo htmlspecialchars($banner['imagem']); ?>" alt="Banner" class="w-full h-[70vh] min-h-[300px] object-cover object-center">
+                        <img src="<?php echo htmlspecialchars($banner['imagem']); ?>" alt="Banner" class="w-full h-[<?php echo $hero_vh; ?>vh] min-h-[300px] object-cover object-center">
                     </a>
                 <?php else: ?>
                     <div class="carousel-slide w-full h-full absolute top-0 left-0 transition-opacity duration-700 <?php echo $i === 0 ? 'opacity-100 z-20' : 'opacity-0 z-10'; ?>">
-                        <img src="<?php echo htmlspecialchars($banner['imagem']); ?>" alt="Banner" class="w-full h-[70vh] min-h-[300px] object-cover object-center">
+                        <img src="<?php echo htmlspecialchars($banner['imagem']); ?>" alt="Banner" class="w-full h-[<?php echo $hero_vh; ?>vh] min-h-[300px] object-cover object-center">
                     </div>
                 <?php endif; ?>
             <?php endforeach; ?>

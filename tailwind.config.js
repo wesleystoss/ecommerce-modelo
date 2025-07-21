@@ -9,5 +9,11 @@ module.exports = {
     extend: {},
   },
   plugins: [],
+  safelist: [
+    'h-[25vh]',
+    'h-[50vh]',
+    'h-[70vh]',
+    'h-[100vh]'
+  ]
 }
 

@@ -190,6 +190,7 @@ $config = Configuracao::get($db);
                         </div>
                         <span class="font-medium text-gray-700">Cupons</span>
                     </a>
+                    <li><a href="?rota=paginas" class="block px-4 py-2 hover:bg-blue-50 rounded transition">Configuração de Páginas</a></li>
                 </div>
             </div>
         </main>        

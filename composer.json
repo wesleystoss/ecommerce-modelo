@@ -8,7 +8,8 @@
     "autoload": {
         "psr-4": {
             "App\\Controllers\\": "app/controllers/",
-            "App\\Models\\": "app/models/"
+            "App\\Models\\": "app/models/",
+            "App\\Models\\PaginasConfig": "app/models/PaginasConfig.php"
         }
     }
 } 

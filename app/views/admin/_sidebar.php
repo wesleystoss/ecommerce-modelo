@@ -43,6 +43,7 @@ $config = Configuracao::get($db);
             <li><a href="?rota=clientes" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-50"><i class="fas fa-users"></i>Clientes</a></li>
             <li class="mt-4 mb-1 text-xs text-gray-400 uppercase tracking-wider">Configurações</li>
             <li><a href="?rota=configuracoes" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-50"><i class="fas fa-cog"></i>Configurações Gerais</a></li>
+            <li><a href="?rota=paginas" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-50"><i class="fas fa-pager"></i>Configuração de Páginas</a></li>
         </ul>
     </nav>
     <div class="px-6 py-4 border-t border-gray-100 text-xs text-gray-400">
