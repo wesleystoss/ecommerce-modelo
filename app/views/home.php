@@ -44,23 +44,58 @@ function produto_image($produto) {
 <body class="bg-gray-50 min-h-screen flex flex-col text-gray-900">
     <?php include __DIR__ . '/partials/header.php'; ?>
     <main class="flex-1">
-        <!-- Banner principal estilo Shopify -->
-        <section class="w-full bg-white border-b border-gray-200">
-            <div class="container mx-auto flex flex-col md:flex-row items-center justify-between py-16 px-4 gap-8">
-                <div class="flex-1 text-center md:text-left">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">Descubra o melhor da <span class="text-blue-600">Loja Modelo</span></h2>
-                    <p class="text-lg md:text-xl text-gray-600 mb-8">Produtos selecionados, entrega rápida e experiência premium para você.</p>
-                    <a href="?rota=produtos" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-full shadow hover:bg-blue-700 transition font-semibold text-lg">Ver Produtos</a>
-                </div>
-                <div class="flex-1 flex justify-center">
-                    <?php if (!empty($banners)): ?>
-                        <img src="<?php echo htmlspecialchars($banners[0]['imagem']); ?>" alt="Banner" class="rounded-2xl shadow-lg w-full max-w-md object-cover">
-                    <?php else: ?>
-                        <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=600&q=80" alt="Banner" class="rounded-2xl shadow-lg w-full max-w-md object-cover">
-                    <?php endif; ?>
-                </div>
+        <!-- Hero Carrossel Fullscreen -->
+        <section class="w-full h-[70vh] min-h-[300px] relative overflow-hidden hero-carousel">
+            <?php foreach ($banners as $i => $banner): ?>
+                <?php if (!empty($banner['link'])): ?>
+                    <a href="<?php echo htmlspecialchars($banner['link']); ?>" target="_blank" class="carousel-slide block w-full h-full absolute top-0 left-0 transition-opacity duration-700 <?php echo $i === 0 ? 'opacity-100 z-20' : 'opacity-0 z-10'; ?>">
+                        <img src="<?php echo htmlspecialchars($banner['imagem']); ?>" alt="Banner" class="w-full h-[70vh] min-h-[300px] object-cover object-center">
+                    </a>
+                <?php else: ?>
+                    <div class="carousel-slide w-full h-full absolute top-0 left-0 transition-opacity duration-700 <?php echo $i === 0 ? 'opacity-100 z-20' : 'opacity-0 z-10'; ?>">
+                        <img src="<?php echo htmlspecialchars($banner['imagem']); ?>" alt="Banner" class="w-full h-[70vh] min-h-[300px] object-cover object-center">
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            <div class="carousel-dots absolute left-1/2 -translate-x-1/2 bottom-8 flex gap-2 z-30">
+                <?php foreach ($banners as $i => $banner): ?>
+                    <span class="carousel-dot w-3 h-3 rounded-full border-2 border-white bg-white/70 cursor-pointer transition <?php echo $i === 0 ? 'bg-blue-600 border-blue-600' : ''; ?>" data-index="<?php echo $i; ?>"></span>
+                <?php endforeach; ?>
             </div>
         </section>
+
+<script>
+(function() {
+    const slides = document.querySelectorAll('.hero-carousel .carousel-slide');
+    const dots = document.querySelectorAll('.carousel-dot');
+    let idx = 0;
+    let interval = null;
+    function show(n) {
+        slides.forEach((el, i) => {
+            el.classList.toggle('opacity-100', i === n);
+            el.classList.toggle('opacity-0', i !== n);
+            el.classList.toggle('z-20', i === n);
+            el.classList.toggle('z-10', i !== n);
+        });
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('bg-blue-600', i === n);
+            dot.classList.toggle('border-blue-600', i === n);
+        });
+        idx = n;
+    }
+    function next() {
+        show((idx + 1) % slides.length);
+    }
+    interval = setInterval(next, 5000);
+    dots.forEach(dot => {
+        dot.addEventListener('click', function() {
+            show(Number(this.dataset.index));
+            clearInterval(interval);
+            interval = setInterval(next, 5000);
+        });
+    });
+})();
+</script>
 
         <!-- Categorias -->
         <section class="container mx-auto py-12 px-4">
