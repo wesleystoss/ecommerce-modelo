@@ -62,6 +62,80 @@ error_reporting(E_ALL);
                                 <option value="100" <?php if($hero_vh=='100') echo 'selected'; ?>>100% da tela</option>
                             </select>
                         </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2" for="button_color">
+                                    <i class="fas fa-paint-brush mr-2 text-blue-600"></i>Cor de Fundo do Botão Principal
+                                </label>
+                                <input type="color" name="button_color" id="button_color" value="<?php echo htmlspecialchars($button_color); ?>" class="w-16 h-10 p-0 border-0 bg-transparent cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2" for="button_text_color">
+                                    <i class="fas fa-font mr-2 text-blue-600"></i>Cor do Texto do Botão Principal
+                                </label>
+                                <input type="color" name="button_text_color" id="button_text_color" value="<?php echo htmlspecialchars($button_text_color); ?>" class="w-16 h-10 p-0 border-0 bg-transparent cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2" for="button_add_bg">
+                                    <i class="fas fa-cart-plus mr-2 text-green-600"></i>Cor de Fundo "Adicionar ao Carrinho"
+                                </label>
+                                <input type="color" name="button_add_bg" id="button_add_bg" value="<?php echo htmlspecialchars($button_add_bg); ?>" class="w-16 h-10 p-0 border-0 bg-transparent cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2" for="button_add_text">
+                                    <i class="fas fa-font mr-2 text-green-600"></i>Cor do Texto "Adicionar ao Carrinho"
+                                </label>
+                                <input type="color" name="button_add_text" id="button_add_text" value="<?php echo htmlspecialchars($button_add_text); ?>" class="w-16 h-10 p-0 border-0 bg-transparent cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2" for="button_details_bg">
+                                    <i class="fas fa-search mr-2 text-indigo-600"></i>Cor de Fundo "Ver Detalhes"
+                                </label>
+                                <input type="color" name="button_details_bg" id="button_details_bg" value="<?php echo htmlspecialchars($button_details_bg); ?>" class="w-16 h-10 p-0 border-0 bg-transparent cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2" for="button_details_text">
+                                    <i class="fas fa-font mr-2 text-indigo-600"></i>Cor do Texto "Ver Detalhes"
+                                </label>
+                                <input type="color" name="button_details_text" id="button_details_text" value="<?php echo htmlspecialchars($button_details_text); ?>" class="w-16 h-10 p-0 border-0 bg-transparent cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2" for="button_promos_bg">
+                                    <i class="fas fa-tags mr-2 text-orange-500"></i>Cor de Fundo "Ver Todas as Promoções"
+                                </label>
+                                <input type="color" name="button_promos_bg" id="button_promos_bg" value="<?php echo htmlspecialchars($button_promos_bg); ?>" class="w-16 h-10 p-0 border-0 bg-transparent cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2" for="button_promos_text">
+                                    <i class="fas fa-font mr-2 text-orange-500"></i>Cor do Texto "Ver Todas as Promoções"
+                                </label>
+                                <input type="color" name="button_promos_text" id="button_promos_text" value="<?php echo htmlspecialchars($button_promos_text); ?>" class="w-16 h-10 p-0 border-0 bg-transparent cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2" for="button_best_bg">
+                                    <i class="fas fa-star mr-2 text-cyan-500"></i>Cor de Fundo "Mais Vendidos"
+                                </label>
+                                <input type="color" name="button_best_bg" id="button_best_bg" value="<?php echo htmlspecialchars($button_best_bg); ?>" class="w-16 h-10 p-0 border-0 bg-transparent cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2" for="button_best_text">
+                                    <i class="fas fa-font mr-2 text-cyan-500"></i>Cor do Texto "Mais Vendidos"
+                                </label>
+                                <input type="color" name="button_best_text" id="button_best_text" value="<?php echo htmlspecialchars($button_best_text); ?>" class="w-16 h-10 p-0 border-0 bg-transparent cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2" for="button_sec_bg">
+                                    <i class="fas fa-clone mr-2 text-gray-500"></i>Cor de Fundo do Botão Secundário
+                                </label>
+                                <input type="color" name="button_sec_bg" id="button_sec_bg" value="<?php echo htmlspecialchars($button_sec_bg); ?>" class="w-16 h-10 p-0 border-0 bg-transparent cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2" for="button_sec_text">
+                                    <i class="fas fa-font mr-2 text-gray-500"></i>Cor do Texto do Botão Secundário
+                                </label>
+                                <input type="color" name="button_sec_text" id="button_sec_text" value="<?php echo htmlspecialchars($button_sec_text); ?>" class="w-16 h-10 p-0 border-0 bg-transparent cursor-pointer">
+                            </div>
+                        </div>
                         <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition flex items-center justify-center gap-2 text-lg">
                             <i class="fas fa-save"></i> Salvar
                         </button>

@@ -3,6 +3,7 @@ session_start();
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../app/models/Configuracao.php';
 require_once __DIR__ . '/../../app/models/Produto.php';
+require_once __DIR__ . '/../../app/models/PaginasConfig.php';
 
 // Toda a lógica de manipulação do carrinho (POST) deve vir antes de qualquer HTML.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -72,7 +73,50 @@ function produto_image($produto) {
     if (!empty($produto['imagem'])) return $produto['imagem'];
     return 'https://source.unsplash.com/collection/190727/400x400?sig=' . $produto['id'];
 }
+
+$button_color = PaginasConfig::get($db, 'home', 'button_color') ?? '#2563eb';
+$button_text_color = PaginasConfig::get($db, 'home', 'button_text_color') ?? '#fff';
+$button_add_bg = PaginasConfig::get($db, 'home', 'button_add_bg') ?? '#22c55e';
+$button_add_text = PaginasConfig::get($db, 'home', 'button_add_text') ?? '#fff';
+$button_details_bg = PaginasConfig::get($db, 'home', 'button_details_bg') ?? '#6366f1';
+$button_details_text = PaginasConfig::get($db, 'home', 'button_details_text') ?? '#fff';
+$button_promos_bg = PaginasConfig::get($db, 'home', 'button_promos_bg') ?? '#f59e42';
+$button_promos_text = PaginasConfig::get($db, 'home', 'button_promos_text') ?? '#fff';
+$button_best_bg = PaginasConfig::get($db, 'home', 'button_best_bg') ?? '#0ea5e9';
+$button_best_text = PaginasConfig::get($db, 'home', 'button_best_text') ?? '#fff';
 ?>
+<style>
+  .btn-principal {
+    background: <?php echo $button_color; ?> !important;
+    color: <?php echo $button_text_color; ?> !important;
+    border: none;
+  }
+  .btn-principal:hover { filter: brightness(0.9); }
+  .btn-add-carrinho {
+    background: <?php echo $button_add_bg; ?> !important;
+    color: <?php echo $button_add_text; ?> !important;
+    border: none;
+  }
+  .btn-add-carrinho:hover { filter: brightness(0.9); }
+  .btn-detalhes {
+    background: <?php echo $button_details_bg; ?> !important;
+    color: <?php echo $button_details_text; ?> !important;
+    border: none;
+  }
+  .btn-detalhes:hover { filter: brightness(0.9); }
+  .btn-promos {
+    background: <?php echo $button_promos_bg; ?> !important;
+    color: <?php echo $button_promos_text; ?> !important;
+    border: none;
+  }
+  .btn-promos:hover { filter: brightness(0.9); }
+  .btn-best {
+    background: <?php echo $button_best_bg; ?> !important;
+    color: <?php echo $button_best_text; ?> !important;
+    border: none;
+  }
+  .btn-best:hover { filter: brightness(0.9); }
+</style>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -123,12 +167,9 @@ function produto_image($produto) {
                     </div>
                 </div>
                 <div class="space-y-3">
-                    <a href="?rota=checkout" class="w-full bg-green-500 text-white px-8 py-4 rounded-full font-bold hover:bg-green-600 transition shadow-lg flex items-center justify-center text-lg">
+                    <a href="?rota=checkout" class="w-full btn-principal px-8 py-4 rounded-full font-bold transition shadow-lg flex items-center justify-center text-lg">
                         <i class="fas fa-check-circle mr-2"></i> Finalizar Compra
                     </a>
-                    <button type="submit" name="atualizar_todos" value="1" class="w-full bg-blue-600 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition shadow-md flex items-center justify-center">
-                        <i class="fas fa-sync-alt mr-2"></i> Atualizar Carrinho
-                    </button>
                 </div>
             </aside>
         </form>
@@ -137,12 +178,62 @@ function produto_image($produto) {
             <i class="fas fa-shopping-cart text-6xl text-gray-300 mb-6"></i>
             <h2 class="text-2xl font-bold text-gray-800 mb-2">Seu carrinho está vazio</h2>
             <p class="text-gray-600 mb-8">Parece que você ainda não adicionou nenhum produto. Que tal dar uma olhada nas nossas ofertas?</p>
-            <a href="?rota=produtos" class="bg-blue-600 text-white px-8 py-4 rounded-full font-bold hover:bg-blue-700 transition shadow-lg inline-block">
+            <a href="?rota=produtos" class="btn-detalhes px-8 py-4 rounded-full font-bold transition shadow-lg inline-block">
                 Continuar Comprando
             </a>
         </div>
     <?php endif; ?>
 </main>
+<script>
+document.querySelectorAll('input[type="number"][name^="quantidade["]').forEach(function(input) {
+    input.addEventListener('change', function() {
+        const produtoId = input.name.match(/quantidade\[(\d+)\]/)[1];
+        const qtd = parseInt(input.value);
+        fetch('/busca_rapida.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'produto_id=' + produtoId + '&quantidade=' + qtd
+        })
+        .then(r => r.json())
+        .then(res => {
+            if (res.status === 'ok') {
+                // Atualiza subtotal do item
+                const subtotal = input.closest('.flex').parentNode.querySelector('.font-bold.text-lg.text-blue-600');
+                if (subtotal) subtotal.textContent = 'R$ ' + res.subtotal;
+                // Atualiza total
+                document.querySelectorAll('span,div').forEach(function(el) {
+                    if (el.textContent && el.textContent.match(/^R\$ [\d,.]+$/) && el.textContent !== 'R$ ' + res.subtotal) {
+                        el.textContent = el.textContent.replace(/R\$ [\d,.]+/, 'R$ ' + res.total);
+                    }
+                });
+            } else if (res.status === 'removed') {
+                // Remove item visualmente
+                input.closest('.flex.items-center.gap-6').remove();
+                // Atualiza total
+                location.reload();
+            }
+        });
+    });
+});
+document.querySelectorAll('button[name="remover_id"]').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const produtoId = btn.value;
+        fetch('/busca_rapida.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'produto_id=' + produtoId + '&quantidade=0'
+        })
+        .then(r => r.json())
+        .then(res => {
+            if (res.status === 'removed') {
+                btn.closest('.flex.items-center.gap-6').remove();
+                location.reload();
+            }
+        });
+    });
+});
+</script>
 <?php include __DIR__ . '/partials/footer.php'; ?>
 </body>
 </html> 

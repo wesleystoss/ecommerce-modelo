@@ -41,7 +41,7 @@ if (!empty($_SESSION['carrinho'])) {
             <input type="hidden" name="rota" value="produtos">
             <span class="text-gray-400"><i class="fas fa-search"></i></span>
             <input type="text" name="nome" id="busca-input" autocomplete="off" class="bg-transparent border-0 outline-none focus:ring-0 w-full px-2 py-2 text-gray-700" placeholder="Buscar produtos..." value="<?php echo htmlspecialchars($_GET['nome'] ?? ''); ?>">
-            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition">Buscar</button>
+            <button type="submit" class="btn-principal px-4 py-2 rounded-lg font-semibold transition">Buscar</button>
             <div id="busca-dropdown" class="absolute left-0 top-full mt-2 w-full bg-white border border-gray-100 rounded-xl shadow-lg z-50 hidden"></div>
         </form>
         <div class="flex items-center gap-3">

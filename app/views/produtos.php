@@ -6,62 +6,20 @@ $config = Configuracao::get($db);
 require_once __DIR__ . '/../../app/models/Categoria.php';
 $categorias = Categoria::all($db);
 require_once __DIR__ . '/../../app/models/Produto.php';
+require_once __DIR__ . '/../../app/models/PaginasConfig.php';
 
-// Filtros
-$nome = $_GET['nome'] ?? '';
-$preco_min = $_GET['preco_min'] ?? '';
-$preco_max = $_GET['preco_max'] ?? '';
-$categoria_id = $_GET['categoria'] ?? '';
-$promocao = $_GET['promocao'] ?? '';
-
-$where = [];
-$params = [];
-if ($nome) {
-    $where[] = 'nome LIKE ?';
-    $params[] = "%$nome%";
-}
-if ($preco_min !== '') {
-    $where[] = 'preco >= ?';
-    $params[] = $preco_min;
-}
-if ($preco_max !== '') {
-    $where[] = 'preco <= ?';
-    $params[] = $preco_max;
-}
-if ($categoria_id) {
-    $where[] = 'categoria_id = ?';
-    $params[] = $categoria_id;
-}
-if ($promocao) {
-    $where[] = 'em_promocao = 1';
-}
-$sql = 'SELECT * FROM produtos';
-if ($where) {
-    $sql .= ' WHERE ' . implode(' AND ', $where);
-}
-
-// Paginação
-$pagina = max(1, (int)($_GET['pagina'] ?? 1));
-$por_pagina = 12;
-$offset = ($pagina - 1) * $por_pagina;
-
-// Contar total de produtos para paginação
-$sql_count = 'SELECT COUNT(*) FROM produtos';
-if ($where) {
-    $sql_count .= ' WHERE ' . implode(' AND ', $where);
-}
-$stmt_count = $db->prepare($sql_count);
-$stmt_count->execute($params);
-$total_produtos = $stmt_count->fetchColumn();
-$total_paginas = ceil($total_produtos / $por_pagina);
-
-// Buscar produtos paginados
-$sql .= ' LIMIT ? OFFSET ?';
-$params[] = $por_pagina;
-$params[] = $offset;
-$produtos = $db->prepare($sql);
-$produtos->execute($params);
-$produtos = $produtos->fetchAll(PDO::FETCH_ASSOC);
+$button_color = PaginasConfig::get($db, 'home', 'button_color') ?? '#2563eb';
+$button_text_color = PaginasConfig::get($db, 'home', 'button_text_color') ?? '#fff';
+$button_add_bg = PaginasConfig::get($db, 'home', 'button_add_bg') ?? '#22c55e';
+$button_add_text = PaginasConfig::get($db, 'home', 'button_add_text') ?? '#fff';
+$button_details_bg = PaginasConfig::get($db, 'home', 'button_details_bg') ?? '#6366f1';
+$button_details_text = PaginasConfig::get($db, 'home', 'button_details_text') ?? '#fff';
+$button_promos_bg = PaginasConfig::get($db, 'home', 'button_promos_bg') ?? '#f59e42';
+$button_promos_text = PaginasConfig::get($db, 'home', 'button_promos_text') ?? '#fff';
+$button_best_bg = PaginasConfig::get($db, 'home', 'button_best_bg') ?? '#0ea5e9';
+$button_best_text = PaginasConfig::get($db, 'home', 'button_best_text') ?? '#fff';
+$button_sec_bg = PaginasConfig::get($db, 'home', 'button_sec_bg') ?? '#f3f4f6';
+$button_sec_text = PaginasConfig::get($db, 'home', 'button_sec_text') ?? '#374151';
 
 function produto_image($produto) {
     if (!empty($produto['imagem'])) {
@@ -80,6 +38,44 @@ function produto_image($produto) {
     return 'https://source.unsplash.com/collection/190727/400x400?sig=' . $produto['id'];
 }
 ?>
+<style>
+  .btn-principal {
+    background: <?php echo $button_color; ?> !important;
+    color: <?php echo $button_text_color; ?> !important;
+    border: none;
+  }
+  .btn-principal:hover { filter: brightness(0.9); }
+  .btn-add-carrinho {
+    background: <?php echo $button_add_bg; ?> !important;
+    color: <?php echo $button_add_text; ?> !important;
+    border: none;
+  }
+  .btn-add-carrinho:hover { filter: brightness(0.9); }
+  .btn-detalhes {
+    background: <?php echo $button_details_bg; ?> !important;
+    color: <?php echo $button_details_text; ?> !important;
+    border: none;
+  }
+  .btn-detalhes:hover { filter: brightness(0.9); }
+  .btn-promos {
+    background: <?php echo $button_promos_bg; ?> !important;
+    color: <?php echo $button_promos_text; ?> !important;
+    border: none;
+  }
+  .btn-promos:hover { filter: brightness(0.9); }
+  .btn-best {
+    background: <?php echo $button_best_bg; ?> !important;
+    color: <?php echo $button_best_text; ?> !important;
+    border: none;
+  }
+  .btn-best:hover { filter: brightness(0.9); }
+  .btn-secundario {
+    background: <?php echo $button_sec_bg; ?> !important;
+    color: <?php echo $button_sec_text; ?> !important;
+    border: none;
+  }
+  .btn-secundario:hover { filter: brightness(0.95); }
+</style>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -127,7 +123,7 @@ function produto_image($produto) {
                     </div>
                     <div class="flex gap-2">
                         <button type="submit" class="flex-1 bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-all">Filtrar</button>
-                        <a href="?rota=produtos" class="flex-1 bg-gray-100 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-all text-center">Limpar</a>
+                        <a href="?rota=produtos" class="flex-1 btn-secundario px-6 py-3 rounded-xl font-semibold transition-all text-center">Limpar</a>
                     </div>
                 </form>
             </aside>
@@ -158,10 +154,10 @@ function produto_image($produto) {
                             </div>
                             <p class="mb-4 text-gray-600 text-center text-sm line-clamp-2 min-h-[38px]"> <?php echo htmlspecialchars($produto['descricao']); ?> </p>
                             <div class="flex flex-col gap-2 w-full mt-auto">
-                                <a href="?rota=produto&id=<?php echo $produto['id']; ?>" class="block bg-blue-50 text-blue-700 px-4 py-2 rounded-full hover:bg-blue-100 transition text-center font-semibold shadow">Ver Detalhes</a>
+                                <a href="?rota=produto&id=<?php echo $produto['id']; ?>" class="block btn-detalhes px-4 py-2 rounded-full transition text-center font-semibold shadow">Ver Detalhes</a>
                                 <form method="post" action="?rota=carrinho" class="w-full">
                                     <input type="hidden" name="adicionar_id" value="<?php echo $produto['id']; ?>">
-                                    <button type="submit" class="w-full <?php echo !empty($produto['em_promocao']) ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'; ?> text-white px-4 py-2 rounded-full transition font-bold text-base shadow">
+                                    <button type="submit" class="w-full <?php echo !empty($produto['em_promocao']) ? 'btn-promos' : 'btn-add-carrinho'; ?> px-4 py-2 rounded-full transition font-bold text-base shadow">
                                         <?php echo !empty($produto['em_promocao']) ? 'Aproveitar Oferta' : 'Adicionar ao Carrinho'; ?>
                                     </button>
                                 </form>

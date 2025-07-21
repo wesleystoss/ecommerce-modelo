@@ -20,24 +20,57 @@ $mais_vendidos = $db->query('SELECT * FROM produtos ORDER BY RANDOM() LIMIT 6')-
 $promocoes = Produto::promocoes($db, 4);
 
 $hero_vh = PaginasConfig::get($db, 'home', 'hero_vh') ?? '70';
+$button_color = PaginasConfig::get($db, 'home', 'button_color') ?? '#2563eb';
+$button_text_color = PaginasConfig::get($db, 'home', 'button_text_color') ?? '#fff';
+$button_add_bg = PaginasConfig::get($db, 'home', 'button_add_bg') ?? '#22c55e';
+$button_add_text = PaginasConfig::get($db, 'home', 'button_add_text') ?? '#fff';
+$button_details_bg = PaginasConfig::get($db, 'home', 'button_details_bg') ?? '#6366f1';
+$button_details_text = PaginasConfig::get($db, 'home', 'button_details_text') ?? '#fff';
+$button_promos_bg = PaginasConfig::get($db, 'home', 'button_promos_bg') ?? '#f59e42';
+$button_promos_text = PaginasConfig::get($db, 'home', 'button_promos_text') ?? '#fff';
+$button_best_bg = PaginasConfig::get($db, 'home', 'button_best_bg') ?? '#0ea5e9';
+$button_best_text = PaginasConfig::get($db, 'home', 'button_best_text') ?? '#fff';
 
 function produto_image($produto) {
     if (!empty($produto['imagem'])) {
         return $produto['imagem'];
+    } else {
+        return '/public/img/placeholder.png';
     }
-    $nome = strtolower($produto['nome']);
-    if (strpos($nome, 'camiseta') !== false) {
-        return 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80';
-    }
-    if (strpos($nome, 'tênis') !== false || strpos($nome, 'tenis') !== false) {
-        return 'https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80';
-    }
-    if (strpos($nome, 'mochila') !== false) {
-        return 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80';
-    }
-    return 'https://source.unsplash.com/collection/190727/400x400?sig=' . $produto['id'];
 }
 ?>
+<style>
+  .btn-principal {
+    background: <?php echo $button_color; ?> !important;
+    color: <?php echo $button_text_color; ?> !important;
+    border: none;
+  }
+  .btn-principal:hover { filter: brightness(0.9); }
+  .btn-add-carrinho {
+    background: <?php echo $button_add_bg; ?> !important;
+    color: <?php echo $button_add_text; ?> !important;
+    border: none;
+  }
+  .btn-add-carrinho:hover { filter: brightness(0.9); }
+  .btn-detalhes {
+    background: <?php echo $button_details_bg; ?> !important;
+    color: <?php echo $button_details_text; ?> !important;
+    border: none;
+  }
+  .btn-detalhes:hover { filter: brightness(0.9); }
+  .btn-promos {
+    background: <?php echo $button_promos_bg; ?> !important;
+    color: <?php echo $button_promos_text; ?> !important;
+    border: none;
+  }
+  .btn-promos:hover { filter: brightness(0.9); }
+  .btn-best {
+    background: <?php echo $button_best_bg; ?> !important;
+    color: <?php echo $button_best_text; ?> !important;
+    border: none;
+  }
+  .btn-best:hover { filter: brightness(0.9); }
+</style>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -133,16 +166,16 @@ function produto_image($produto) {
                             <h2 class="text-lg font-semibold mb-1 text-gray-900 text-center group-hover:text-blue-600 transition"><?php echo htmlspecialchars($produto['nome']); ?></h2>
                             <p class="mb-2 text-gray-600 text-center text-sm"><?php echo htmlspecialchars($produto['descricao']); ?></p>
                             <span class="mb-4 font-bold text-blue-600 text-lg">R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></span>
-                            <a href="?rota=produto&id=<?php echo $produto['id']; ?>" class="block bg-blue-50 text-blue-700 px-4 py-2 rounded-full hover:bg-blue-100 transition text-center font-semibold mb-2">Ver Detalhes</a>
+                            <a href="?rota=produto&id=<?php echo $produto['id']; ?>" class="block btn-detalhes px-4 py-2 rounded-full transition text-center font-semibold mb-2">Ver Detalhes</a>
                             <form method="post" action="?rota=carrinho" class="w-full">
                                 <input type="hidden" name="adicionar_id" value="<?php echo $produto['id']; ?>">
-                                <button type="submit" class="w-full bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition font-bold text-base shadow">Adicionar ao Carrinho</button>
+                                <button type="submit" class="w-full btn-add-carrinho px-4 py-2 rounded-full transition font-bold text-base shadow">Adicionar ao Carrinho</button>
                             </form>
                         </div>
                     <?php endforeach; ?>
                 </div>
                 <div class="flex justify-center mt-8">
-                    <a href="?rota=produtos" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-full shadow hover:bg-blue-700 transition font-semibold text-lg">Ver todos os produtos</a>
+                    <a href="?rota=produtos" class="btn-principal inline-block px-8 py-3 rounded-full shadow font-semibold text-lg transition">Ver todos os produtos</a>
                 </div>
             </div>
         </section>
@@ -161,7 +194,7 @@ function produto_image($produto) {
                             <span class="mb-2 font-bold text-blue-600 text-base">R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></span>
                             <form method="post" action="?rota=carrinho" class="w-full">
                                 <input type="hidden" name="adicionar_id" value="<?php echo $produto['id']; ?>">
-                                <button type="submit" class="w-full bg-blue-600 text-white px-3 py-1 rounded-full hover:bg-blue-700 transition font-semibold text-sm shadow">Comprar</button>
+                                <button type="submit" class="w-full btn-best px-3 py-1 rounded-full font-semibold text-sm shadow">Comprar</button>
                             </form>
                         </div>
                     <?php endforeach; ?>
@@ -189,13 +222,13 @@ function produto_image($produto) {
                             </div>
                             <form method="post" action="?rota=carrinho" class="w-full">
                                 <input type="hidden" name="adicionar_id" value="<?php echo $produto['id']; ?>">
-                                <button type="submit" class="w-full bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition font-bold text-base shadow">Aproveitar Oferta</button>
+                                <button type="submit" class="btn-promos w-full px-4 py-2 rounded-full font-bold text-base shadow transition">Aproveitar Oferta</button>
                             </form>
                         </div>
                     <?php endforeach; ?>
                 </div>
                 <div class="flex justify-center mt-8">
-                    <a href="?rota=produtos&promocao=1" class="inline-block bg-red-500 text-white px-8 py-3 rounded-full shadow hover:bg-red-600 transition font-semibold text-lg">Ver todas as promoções</a>
+                    <a href="?rota=produtos&promocao=1" class="btn-promos inline-block px-8 py-3 rounded-full shadow font-semibold text-lg">Ver todas as promoções</a>
                 </div>
             </div>
         </section>
@@ -224,7 +257,7 @@ function produto_image($produto) {
                 <p class="text-blue-100 mb-6 text-lg">Receba ofertas exclusivas e seja o primeiro a saber sobre novos produtos</p>
                 <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
                     <input type="email" placeholder="Seu melhor e-mail" class="flex-1 px-4 py-3 rounded-full border-0 focus:ring-2 focus:ring-white">
-                    <button type="submit" class="bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition">Inscrever-se</button>
+                    <button type="submit" class="btn-principal bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition">Inscrever-se</button>
                 </form>
             </div>
         </section>

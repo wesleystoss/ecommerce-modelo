@@ -1,7 +1,50 @@
 <?php
 require_once __DIR__ . '/../../app/models/Configuracao.php';
 $config = Configuracao::get($db);
+require_once __DIR__ . '/../../app/models/PaginasConfig.php';
+$button_color = PaginasConfig::get($db, 'home', 'button_color') ?? '#2563eb';
+$button_text_color = PaginasConfig::get($db, 'home', 'button_text_color') ?? '#fff';
+$button_add_bg = PaginasConfig::get($db, 'home', 'button_add_bg') ?? '#22c55e';
+$button_add_text = PaginasConfig::get($db, 'home', 'button_add_text') ?? '#fff';
+$button_details_bg = PaginasConfig::get($db, 'home', 'button_details_bg') ?? '#6366f1';
+$button_details_text = PaginasConfig::get($db, 'home', 'button_details_text') ?? '#fff';
+$button_promos_bg = PaginasConfig::get($db, 'home', 'button_promos_bg') ?? '#f59e42';
+$button_promos_text = PaginasConfig::get($db, 'home', 'button_promos_text') ?? '#fff';
+$button_best_bg = PaginasConfig::get($db, 'home', 'button_best_bg') ?? '#0ea5e9';
+$button_best_text = PaginasConfig::get($db, 'home', 'button_best_text') ?? '#fff';
 ?>
+<style>
+  .btn-principal {
+    background: <?php echo $button_color; ?> !important;
+    color: <?php echo $button_text_color; ?> !important;
+    border: none;
+  }
+  .btn-principal:hover { filter: brightness(0.9); }
+  .btn-add-carrinho {
+    background: <?php echo $button_add_bg; ?> !important;
+    color: <?php echo $button_add_text; ?> !important;
+    border: none;
+  }
+  .btn-add-carrinho:hover { filter: brightness(0.9); }
+  .btn-detalhes {
+    background: <?php echo $button_details_bg; ?> !important;
+    color: <?php echo $button_details_text; ?> !important;
+    border: none;
+  }
+  .btn-detalhes:hover { filter: brightness(0.9); }
+  .btn-promos {
+    background: <?php echo $button_promos_bg; ?> !important;
+    color: <?php echo $button_promos_text; ?> !important;
+    border: none;
+  }
+  .btn-promos:hover { filter: brightness(0.9); }
+  .btn-best {
+    background: <?php echo $button_best_bg; ?> !important;
+    color: <?php echo $button_best_text; ?> !important;
+    border: none;
+  }
+  .btn-best:hover { filter: brightness(0.9); }
+</style>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -65,7 +108,7 @@ $config = Configuracao::get($db);
                         <label for="qtd" class="font-semibold">Quantidade</label>
                         <input type="number" name="qtd" id="qtd" value="1" min="1" class="border border-gray-300 rounded-lg w-20 p-2">
                     </div>
-                    <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition w-full md:w-auto shadow">Adicionar ao Carrinho</button>
+                    <button type="submit" class="btn-add-carrinho px-8 py-3 rounded-full font-bold transition w-full md:w-auto shadow">Adicionar ao Carrinho</button>
                 </form>
                 <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-2 text-gray-600 text-sm">
                     <div>🚚 Entrega gratuita</div>
@@ -88,10 +131,10 @@ $config = Configuracao::get($db);
                         </div>
                         <div class="font-semibold text-gray-900 text-center mb-1"><?php echo htmlspecialchars($rel['nome']); ?></div>
                         <div class="text-blue-600 font-bold mb-1">R$ <?php echo number_format($rel['preco'], 2, ',', '.'); ?></div>
-                        <a href="?rota=produto&id=<?php echo $rel['id']; ?>" class="bg-blue-50 text-blue-700 px-4 py-2 rounded-full hover:bg-blue-100 transition text-sm font-semibold w-full text-center">Ver Detalhes</a>
+                        <a href="?rota=produto&id=<?php echo $rel['id']; ?>" class="btn-detalhes px-4 py-2 rounded-full transition text-sm font-semibold w-full text-center">Ver Detalhes</a>
                         <form method="post" action="?rota=carrinho" class="w-full mt-2">
                             <input type="hidden" name="produto_id" value="<?php echo $rel['id']; ?>">
-                            <button type="submit" class="w-full bg-green-500 text-white px-2 py-2 rounded-full hover:bg-green-600 transition text-xs font-semibold">Adicionar</button>
+                            <button type="submit" class="w-full btn-add-carrinho px-2 py-2 rounded-full transition text-xs font-semibold">Adicionar</button>
                         </form>
                     </div>
                 <?php endforeach; ?>
