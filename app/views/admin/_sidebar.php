@@ -26,11 +26,14 @@
             <li><a href="?rota=avaliacoes" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-50"><i class="fas fa-star"></i>Avaliações</a></li>
             <li><a href="/admin/?rota=faqs" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-50"><i class="fas fa-question-circle"></i>FAQs</a></li>
             <li><a href="?rota=vantagens" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-50"><i class="fas fa-lightbulb"></i>Vantagens</a></li>
+            <li class="mt-4 mb-1 text-xs text-gray-400 uppercase tracking-wider">Vendas</li>
             <li><a href="?rota=pedidos" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-50"><i class="fas fa-shopping-cart"></i>Pedidos</a></li>
-            <li><a href="?rota=clientes" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-50"><i class="fas fa-users"></i>Clientes</a></li>
-            <li><a href="?rota=banners" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-50"><i class="fas fa-image"></i>Banners</a></li>
             <li><a href="?rota=cupons" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-50"><i class="fas fa-tag"></i>Cupons</a></li>
+            <li class="mt-4 mb-1 text-xs text-gray-400 uppercase tracking-wider">Marketing</li>
+            <li><a href="?rota=banners" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-50"><i class="fas fa-image"></i>Banners</a></li>
             <li><a href="?rota=popups" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-50"><i class="fas fa-window-maximize"></i>Pop-ups</a></li>
+            <li class="mt-4 mb-1 text-xs text-gray-400 uppercase tracking-wider">Clientes</li>
+            <li><a href="?rota=clientes" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-50"><i class="fas fa-users"></i>Clientes</a></li>
             <li class="mt-4 mb-1 text-xs text-gray-400 uppercase tracking-wider">Configurações</li>
             <li><a href="?rota=configuracoes" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-50"><i class="fas fa-cog"></i>Configurações Gerais</a></li>
         </ul>

@@ -90,3 +90,26 @@ Dados carregados para edição: Array
 )
 
 
+Dados carregados para edição: Array
+(
+    [timestamp] => 2025-07-21 15:00:06
+    [id_buscado] => 7
+    [dados_carregados] => Array
+        (
+            [id] => 7
+            [nome] => Coleira Ajustável
+            [descricao] => Coleira confortável e resistente para cães de todos os portes.
+            [preco] => 29.9
+            [imagem] => https://images.unsplash.com/photo-1518715308788-3005759c61d4?auto=format&fit=crop&w=400&q=80
+            [categoria_id] => 5
+            [destaque] => 0
+            [tipo_estoque] => ilimitado
+            [estoque] => 0
+            [em_promocao] => 0
+            [preco_promocional] => 
+            [percentual_desconto] => 
+        )
+
+)
+
+
