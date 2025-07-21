@@ -53,9 +53,16 @@ if (!empty($_SESSION['carrinho'])) {
                     </span>
                 <?php endif; ?>
             </a>
-            <a href="?rota=login" class="text-blue-700 hover:bg-blue-50 p-2 rounded-full transition">
-                <i class="fas fa-user text-2xl"></i>
-            </a>
+            <?php if (isset($_SESSION['cliente_id'])): ?>
+                <a href="?rota=conta" class="text-blue-700 hover:bg-blue-50 p-2 rounded-full transition">
+                    <i class="fas fa-user text-2xl"></i>
+                </a>
+                <a href="?rota=logout" class="text-red-700 hover:bg-red-50 px-3 py-2 rounded-lg font-semibold transition">Sair</a>
+            <?php else: ?>
+                <a href="?rota=login" class="text-blue-700 hover:bg-blue-50 p-2 rounded-full transition">
+                    <i class="fas fa-user text-2xl"></i>
+                </a>
+            <?php endif; ?>
             <a href="/admin" class="text-purple-700 hover:bg-purple-50 px-3 py-2 rounded-lg font-semibold transition">Admin</a>
         </div>
     </div>

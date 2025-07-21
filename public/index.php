@@ -32,6 +32,26 @@ switch ($rota) {
         $controller = new CarrinhoController();
         $controller->index();
         break;
+    case 'login':
+        require_once __DIR__ . '/../app/controllers/AuthController.php';
+        $controller = new AuthController();
+        $controller->login();
+        break;
+    case 'cadastro':
+        require_once __DIR__ . '/../app/controllers/AuthController.php';
+        $controller = new AuthController();
+        $controller->cadastro();
+        break;
+    case 'conta':
+        require_once __DIR__ . '/../app/controllers/AuthController.php';
+        $controller = new AuthController();
+        $controller->conta();
+        break;
+    case 'logout':
+        require_once __DIR__ . '/../app/controllers/AuthController.php';
+        $controller = new AuthController();
+        $controller->logout();
+        break;
     case 'admin':
         $controller = new AdminController();
         $controller->index();
