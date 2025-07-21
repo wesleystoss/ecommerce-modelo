@@ -141,12 +141,12 @@ function produto_image($produto) {
                     <?php foreach ($produtos as $produto): ?>
                         <div class="relative bg-white rounded-2xl shadow-md border border-gray-100 p-6 flex flex-col items-center hover:shadow-xl hover:scale-105 transition-all duration-200 group min-h-[420px]">
                             <?php if (!empty($produto['em_promocao']) && !empty($produto['percentual_desconto'])): ?>
-                                <div class="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">-<?php echo $produto['percentual_desconto']; ?>%</div>
+                                <div class="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-20">-<?php echo $produto['percentual_desconto']; ?>%</div>
                             <?php endif; ?>
                             <?php if (!empty($produto['destaque'])): ?>
-                                <span class="absolute top-3 <?php echo !empty($produto['em_promocao']) ? 'left-3' : 'right-3'; ?> bg-gradient-to-r from-yellow-400 to-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg uppercase tracking-wider">Destaque</span>
+                                <span class="absolute top-3 <?php echo !empty($produto['em_promocao']) ? 'left-3' : 'right-3'; ?> bg-gradient-to-r from-yellow-400 to-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg uppercase tracking-wider z-20">Destaque</span>
                             <?php endif; ?>
-                            <img src="<?php echo produto_image($produto); ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>" class="w-32 h-32 object-cover rounded-xl mb-4 border border-gray-200 group-hover:scale-110 transition-all duration-200 shadow">
+                            <img src="<?php echo produto_image($produto); ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>" class="w-32 h-32 object-cover rounded-xl mb-4 border border-gray-200 group-hover:scale-110 transition-all duration-200 shadow z-10 relative">
                             <h2 class="text-lg font-semibold mb-1 text-gray-900 text-center group-hover:text-blue-600 transition"><?php echo htmlspecialchars($produto['nome']); ?></h2>
                             <div class="mb-2">
                                 <?php if (!empty($produto['em_promocao']) && !empty($produto['preco_promocional'])): ?>
