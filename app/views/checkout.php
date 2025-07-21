@@ -193,12 +193,37 @@ unset($p);
     }
     // Máscara de CEP 00000-000
     const cepInput = document.getElementById('cep');
+    const enderecoInput = document.getElementById('endereco');
+    const cidadeInput = document.getElementById('cidade');
+    const estadoInput = document.getElementById('estado');
     if (cepInput) {
       cepInput.addEventListener('input', function(e) {
         let v = this.value.replace(/\D/g, '');
         if (v.length > 8) v = v.slice(0, 8);
         if (v.length > 5) v = v.slice(0, 5) + '-' + v.slice(5);
         this.value = v;
+      });
+      cepInput.addEventListener('blur', function() {
+        const cep = this.value.replace(/\D/g, '');
+        if (cep.length === 8) {
+          fetch('https://viacep.com.br/ws/' + cep + '/json/')
+            .then(r => r.json())
+            .then(data => {
+              if (data.erro) {
+                alert('CEP não encontrado.');
+                if (enderecoInput) enderecoInput.value = '';
+                if (cidadeInput) cidadeInput.value = '';
+                if (estadoInput) estadoInput.value = '';
+              } else {
+                if (enderecoInput) enderecoInput.value = (data.logradouro || '') + (data.bairro ? ' - ' + data.bairro : '');
+                if (cidadeInput) cidadeInput.value = data.localidade || '';
+                if (estadoInput) estadoInput.value = data.uf || '';
+              }
+            })
+            .catch(() => {
+              alert('Erro ao buscar o CEP.');
+            });
+        }
       });
     }
     // Exibir campos do cartão apenas se selecionado
