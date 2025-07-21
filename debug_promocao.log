@@ -113,3 +113,95 @@ Dados carregados para edição: Array
 )
 
 
+Dados carregados para edição: Array
+(
+    [timestamp] => 2025-07-21 15:01:56
+    [id_buscado] => 2
+    [dados_carregados] => Array
+        (
+            [id] => 2
+            [nome] => Camiseta Básica
+            [descricao] => Camiseta 100% algodão, várias cores.
+            [preco] => 49.9
+            [imagem] => https://plus.unsplash.com/premium_photo-1752502981932-16a2c0ae9da1?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw5fHx8ZW58MHx8fHx8
+            [categoria_id] => 4
+            [destaque] => 0
+            [tipo_estoque] => ilimitado
+            [estoque] => 0
+            [em_promocao] => 1
+            [preco_promocional] => 39.92
+            [percentual_desconto] => 20
+        )
+
+)
+
+
+Dados carregados para edição: Array
+(
+    [timestamp] => 2025-07-21 15:02:04
+    [id_buscado] => 1
+    [dados_carregados] => Array
+        (
+            [id] => 1
+            [nome] => Produto 1 teste
+            [descricao] => Descrição teste
+            [preco] => 10
+            [imagem] => https://images.unsplash.com/photo-1752867494500-9ea9322f58c9?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
+            [categoria_id] => 2
+            [destaque] => 1
+            [tipo_estoque] => controlado
+            [estoque] => 1
+            [em_promocao] => 1
+            [preco_promocional] => 8
+            [percentual_desconto] => 20
+        )
+
+)
+
+
+Dados carregados para edição: Array
+(
+    [timestamp] => 2025-07-21 15:02:07
+    [id_buscado] => 2
+    [dados_carregados] => Array
+        (
+            [id] => 2
+            [nome] => Camiseta Básica
+            [descricao] => Camiseta 100% algodão, várias cores.
+            [preco] => 49.9
+            [imagem] => https://plus.unsplash.com/premium_photo-1752502981932-16a2c0ae9da1?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw5fHx8ZW58MHx8fHx8
+            [categoria_id] => 4
+            [destaque] => 0
+            [tipo_estoque] => ilimitado
+            [estoque] => 0
+            [em_promocao] => 1
+            [preco_promocional] => 39.92
+            [percentual_desconto] => 20
+        )
+
+)
+
+
+Dados carregados para edição: Array
+(
+    [timestamp] => 2025-07-21 15:04:43
+    [id_buscado] => 10
+    [dados_carregados] => Array
+        (
+            [id] => 10
+            [nome] => Comedouro Inox
+            [descricao] => Comedouro de aço inoxidável, fácil de limpar.
+            [preco] => 24.9
+            [imagem] => https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=400&q=80
+            [categoria_id] => 5
+            [destaque] => 0
+            [tipo_estoque] => ilimitado
+            [estoque] => 0
+            [em_promocao] => 0
+            [preco_promocional] => 
+            [percentual_desconto] => 
+        )
+
+)
+
+

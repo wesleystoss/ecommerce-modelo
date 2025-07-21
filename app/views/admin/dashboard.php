@@ -182,21 +182,6 @@
                     </a>
                 </div>
             </div>
-        </main>
-
-        <!-- Footer -->
-        <footer class="bg-white border-t border-gray-200 mt-12">
-            <div class="container mx-auto px-6 py-4">
-                <div class="flex justify-between items-center">
-                    <p class="text-gray-600">&copy; <?php echo date('Y'); ?> Loja Modelo - Painel Administrativo</p>
-                    <div class="flex items-center space-x-4 text-sm text-gray-500">
-                        <span>Versão 1.0</span>
-                        <span>•</span>
-                        <span>Última atualização: <?php echo date('d/m/Y H:i'); ?></span>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </div>
+        </main>        
 </body>
 </html> 

@@ -366,6 +366,29 @@ $categorias = Categoria::all($db);
                         </tbody>
                     </table>
                 </div>
+                <!-- Paginação -->
+                <?php if ($total_paginas > 1): ?>
+                <div class="flex justify-center mt-8 p-4">
+                    <nav class="inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                        <?php if ($pagina > 1): ?>
+                            <a href="?rota=produtos&pagina=<?php echo $pagina-1; ?><?php echo $busca_nome ? '&busca_nome='.urlencode($busca_nome) : ''; ?><?php echo $busca_id ? '&busca_id='.urlencode($busca_id) : ''; ?>" class="relative inline-flex items-center px-3 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                <i class="fas fa-chevron-left"></i>
+                            </a>
+                        <?php endif; ?>
+                        <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
+                            <a href="?rota=produtos&pagina=<?php echo $i; ?><?php echo $busca_nome ? '&busca_nome='.urlencode($busca_nome) : ''; ?><?php echo $busca_id ? '&busca_id='.urlencode($busca_id) : ''; ?>"
+                               class="relative inline-flex items-center px-3 py-2 border border-gray-300 bg-white text-sm font-medium <?php echo $i == $pagina ? 'text-blue-600 font-bold bg-blue-50' : 'text-gray-500 hover:bg-gray-50'; ?>">
+                                <?php echo $i; ?>
+                            </a>
+                        <?php endfor; ?>
+                        <?php if ($pagina < $total_paginas): ?>
+                            <a href="?rota=produtos&pagina=<?php echo $pagina+1; ?><?php echo $busca_nome ? '&busca_nome='.urlencode($busca_nome) : ''; ?><?php echo $busca_id ? '&busca_id='.urlencode($busca_id) : ''; ?>" class="relative inline-flex items-center px-3 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        <?php endif; ?>
+                    </nav>
+                </div>
+                <?php endif; ?>
             </div>
         </main>
 
