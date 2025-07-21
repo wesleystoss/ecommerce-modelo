@@ -26,7 +26,7 @@ if ($rota_atual === 'produto') {
 }
 $popup_ativo = Popup::getActivePopupForPage(getDB(), $rota_atual);
 
-if ($popup_ativo):
+if ($popup_ativo && ($popup_ativo['tipo'] ?? 'modal_central') === 'modal_central'):
     // Define classes de tamanho com base no DB
     $tamanho_classes = [
         'pequeno' => 'max-w-md min-w-[300px] min-h-[100px] p-4',
@@ -36,71 +36,7 @@ if ($popup_ativo):
     $classe_tamanho = $tamanho_classes[$popup_ativo['tamanho']] ?? 'max-w-xl min-w-[400px] min-h-[200px] p-6';
     $frequencia = $popup_ativo['frequencia'] ?? 'sempre';
     $popup_id = $popup_ativo['id'];
-    $tipo = $popup_ativo['tipo'] ?? 'modal_central';
 ?>
-<?php if ($tipo === 'banner_topo'): ?>
-    <div id="popup-banner-topo" class="fixed top-0 left-0 w-full z-50 bg-white shadow-lg border-b border-gray-200 animate-slide-down">
-        <div class="container mx-auto flex justify-between items-center py-3 px-4 <?php echo $classe_tamanho; ?>">
-            <div class="flex-1">
-                <?php echo $popup_ativo['conteudo_html']; ?>
-            </div>
-            <button id="popup-banner-close" class="ml-4 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
-        </div>
-    </div>
-    <style>
-    @keyframes slide-down {
-        from { transform: translateY(-100%); }
-        to { transform: translateY(0); }
-    }
-    .animate-slide-down { animation: slide-down 0.4s cubic-bezier(.4,0,.2,1); }
-    </style>
-    <script>
-    (function() {
-        const frequencia = '<?php echo $frequencia; ?>';
-        const popupId = '<?php echo $popup_id; ?>';
-        const banner = document.getElementById('popup-banner-topo');
-        const closeBtn = document.getElementById('popup-banner-close');
-        let podeExibir = true;
-        function getCookie(name) {
-            const v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-            return v ? v[2] : null;
-        }
-        function setCookie(name, value, days) {
-            let expires = '';
-            if (days) {
-                const d = new Date();
-                d.setTime(d.getTime() + (days*24*60*60*1000));
-                expires = '; expires=' + d.toUTCString();
-            }
-            document.cookie = name + '=' + value + expires + '; path=/';
-        }
-        if (frequencia === 'unica_sessao') {
-            if (sessionStorage.getItem('popup_' + popupId)) {
-                podeExibir = false;
-            } else {
-                sessionStorage.setItem('popup_' + popupId, '1');
-            }
-        } else if (frequencia === 'diaria') {
-            const cookie = getCookie('popup_' + popupId);
-            if (cookie === '1') {
-                podeExibir = false;
-            } else {
-                setCookie('popup_' + popupId, '1', 1);
-            }
-        }
-        if (!podeExibir) {
-            banner.style.display = 'none';
-        } else {
-            // Ajusta o padding-top do body para a altura do banner
-            document.body.style.paddingTop = banner.offsetHeight + 'px';
-        }
-        closeBtn.addEventListener('click', function() {
-            banner.style.display = 'none';
-            document.body.style.paddingTop = null;
-        });
-    })();
-    </script>
-<?php else: ?>
     <div id="popup-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center" style="display:none;">
         <div id="popup-container" class="bg-white rounded-lg shadow-2xl relative <?php echo $classe_tamanho; ?> transform transition-all duration-300 scale-95 opacity-0">
             <button id="popup-close" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
@@ -163,5 +99,4 @@ if ($popup_ativo):
         });
     })();
     </script>
-<?php endif; // fechamento do else do tipo ?>
-<?php endif; // fechamento do if ($popup_ativo) ?> 
+<?php endif; // fechamento do if modal_central ?> 

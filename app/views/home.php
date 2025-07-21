@@ -43,6 +43,7 @@ function produto_image($produto) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col text-gray-900">
+    <?php include __DIR__ . '/partials/banner_topo.php'; ?>
     <?php include __DIR__ . '/partials/header.php'; ?>
     <main class="flex-1">
         <!-- Hero Carrossel Fullscreen -->

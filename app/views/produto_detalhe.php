@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/../../app/models/Configuracao.php';
 $config = Configuracao::get($db);
-include __DIR__ . '/partials/header.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -10,8 +9,11 @@ include __DIR__ . '/partials/header.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($produto['nome']); ?> - <?php echo htmlspecialchars($config['nome_empresa'] ?? 'Loja Modelo'); ?></title>
     <link href="/css/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col text-gray-900">
+    <?php include __DIR__ . '/partials/banner_topo.php'; ?>
+    <?php include __DIR__ . '/partials/header.php'; ?>
     <main class="flex-1 container mx-auto p-4 md:p-8">
         <!-- Breadcrumb -->
         <nav class="text-sm text-gray-500 mb-4">

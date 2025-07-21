@@ -83,6 +83,7 @@ function produto_image($produto) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col text-gray-900">
+<?php include __DIR__ . '/partials/banner_topo.php'; ?>
 <?php include __DIR__ . '/partials/header.php'; ?>
 <main class="flex-1 container mx-auto p-4 md:p-8">
     <h1 class="text-3xl font-extrabold text-gray-800 mb-8">Seu Carrinho</h1>

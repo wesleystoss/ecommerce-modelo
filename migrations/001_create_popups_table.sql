@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS popups (
     tipo VARCHAR(50) NOT NULL DEFAULT 'modal_central',
     paginas_exibicao TEXT,
     frequencia VARCHAR(50) NOT NULL DEFAULT 'sempre',
+    cor_fundo VARCHAR(100) DEFAULT NULL,
     ativo BOOLEAN NOT NULL DEFAULT 0,
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ); 

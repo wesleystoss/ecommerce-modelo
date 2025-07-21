@@ -77,6 +77,13 @@ $paginas_selecionadas = isset($popup) ? json_decode($popup['paginas_exibicao'], 
     </select>
 </div>
 
+<!-- Cor de Fundo -->
+<div class="mb-4">
+    <label for="cor_fundo" class="block text-gray-700 font-semibold mb-1"><i class="fas fa-fill-drip mr-1"></i> Cor de Fundo do Banner</label>
+    <input type="text" name="cor_fundo" id="cor_fundo" value="<?php echo htmlspecialchars($popup['cor_fundo'] ?? '', ENT_QUOTES); ?>" placeholder="Ex: #ff0000 ou bg-red-600 ou linear-gradient(...)" class="w-full border rounded p-2" />
+    <small class="text-gray-500">Aceita cor hexadecimal, nome de classe Tailwind ou CSS gradient.</small>
+</div>
+
 <!-- Botões -->
 <div class="md:col-span-2 flex gap-4 pt-4">
     <button type="submit" class="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
