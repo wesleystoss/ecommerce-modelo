@@ -205,3 +205,141 @@ Dados carregados para edição: Array
 )
 
 
+Dados carregados para edição: Array
+(
+    [timestamp] => 2025-07-21 17:08:48
+    [id_buscado] => 1
+    [dados_carregados] => Array
+        (
+            [id] => 1
+            [nome] => Produto 1 teste
+            [descricao] => Descrição teste
+            [preco] => 10
+            [imagem] => https://images.unsplash.com/photo-1752867494500-9ea9322f58c9?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
+            [categoria_id] => 2
+            [destaque] => 1
+            [tipo_estoque] => controlado
+            [estoque] => 1
+            [em_promocao] => 1
+            [preco_promocional] => 8
+            [percentual_desconto] => 20
+        )
+
+)
+
+
+Dados carregados para edição: Array
+(
+    [timestamp] => 2025-07-21 17:08:55
+    [id_buscado] => 3
+    [dados_carregados] => Array
+        (
+            [id] => 3
+            [nome] => Tênis Esportivo
+            [descricao] => Tênis confortável para corrida e caminhada.
+            [preco] => 199.9
+            [imagem] => https://images.unsplash.com/photo-1682687220015-186f63b8850a?q=80&w=1375&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
+            [categoria_id] => 3
+            [destaque] => 1
+            [tipo_estoque] => ilimitado
+            [estoque] => 0
+            [em_promocao] => 1
+            [preco_promocional] => 159.92
+            [percentual_desconto] => 20
+        )
+
+)
+
+
+Dados carregados para edição: Array
+(
+    [timestamp] => 2025-07-21 17:09:04
+    [id_buscado] => 4
+    [dados_carregados] => Array
+        (
+            [id] => 4
+            [nome] => Mochila Escolar
+            [descricao] => Mochila resistente com vários compartimentos.
+            [preco] => 89.9
+            [imagem] => https://images.unsplash.com/photo-1752779588144-938ea861bf05?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
+            [categoria_id] => 4
+            [destaque] => 1
+            [tipo_estoque] => ilimitado
+            [estoque] => 0
+            [em_promocao] => 1
+            [preco_promocional] => 71.92
+            [percentual_desconto] => 20
+        )
+
+)
+
+
+Dados carregados para edição: Array
+(
+    [timestamp] => 2025-07-21 17:09:10
+    [id_buscado] => 2
+    [dados_carregados] => Array
+        (
+            [id] => 2
+            [nome] => Camiseta Básica
+            [descricao] => Camiseta 100% algodão, várias cores.
+            [preco] => 49.9
+            [imagem] => https://plus.unsplash.com/premium_photo-1752502981932-16a2c0ae9da1?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw5fHx8ZW58MHx8fHx8
+            [categoria_id] => 4
+            [destaque] => 0
+            [tipo_estoque] => controlado
+            [estoque] => 0
+            [em_promocao] => 1
+            [preco_promocional] => 39.92
+            [percentual_desconto] => 20
+        )
+
+)
+
+
+Dados carregados para edição: Array
+(
+    [timestamp] => 2025-07-21 17:09:15
+    [id_buscado] => 5
+    [dados_carregados] => Array
+        (
+            [id] => 5
+            [nome] => Item teste
+            [descricao] => Descrição de teste para um produto
+            [preco] => 39
+            [imagem] => https://images.unsplash.com/photo-1752694753627-f23b1cbc3ecf?q=80&w=696&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
+            [categoria_id] => 2
+            [destaque] => 1
+            [tipo_estoque] => ilimitado
+            [estoque] => 0
+            [em_promocao] => 1
+            [preco_promocional] => 31.2
+            [percentual_desconto] => 20
+        )
+
+)
+
+
+Dados carregados para edição: Array
+(
+    [timestamp] => 2025-07-21 17:09:23
+    [id_buscado] => 8
+    [dados_carregados] => Array
+        (
+            [id] => 8
+            [nome] => Brinquedo Mordedor
+            [descricao] => Brinquedo de borracha para saúde bucal do seu pet.
+            [preco] => 19.9
+            [imagem] => https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=400&q=80
+            [categoria_id] => 5
+            [destaque] => 0
+            [tipo_estoque] => ilimitado
+            [estoque] => 0
+            [em_promocao] => 1
+            [preco_promocional] => 10
+            [percentual_desconto] => 80
+        )
+
+)
+
+

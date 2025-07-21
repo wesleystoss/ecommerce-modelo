@@ -167,12 +167,14 @@ function produto_image($produto) {
             </div>
         </section>
 
+        <?php if (!empty($promocoes)): ?>
         <!-- Produtos em promoção -->
         <section class="py-12 px-4 bg-white">
             <div class="max-w-7xl mx-auto">
                 <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">Promoções Especiais</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-                    <?php foreach ($promocoes as $produto): ?>
+                    <?php foreach (
+                        $promocoes as $produto): ?>
                         <div class="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center border border-gray-100 hover:shadow-xl transition group relative">
                             <?php if ($produto['percentual_desconto']): ?>
                                 <div class="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">-<?php echo $produto['percentual_desconto']; ?>%</div>
@@ -189,22 +191,18 @@ function produto_image($produto) {
                             </form>
                         </div>
                     <?php endforeach; ?>
-                    <?php if (empty($promocoes)): ?>
-                        <div class="col-span-full text-center text-gray-500">Nenhuma promoção disponível no momento.</div>
-                    <?php endif; ?>
                 </div>
-                <?php if (!empty($promocoes)): ?>
-                    <div class="flex justify-center mt-8">
-                        <a href="?rota=produtos&promocao=1" class="inline-block bg-red-500 text-white px-8 py-3 rounded-full shadow hover:bg-red-600 transition font-semibold text-lg">Ver todas as promoções</a>
-                    </div>
-                <?php endif; ?>
+                <div class="flex justify-center mt-8">
+                    <a href="?rota=produtos&promocao=1" class="inline-block bg-red-500 text-white px-8 py-3 rounded-full shadow hover:bg-red-600 transition font-semibold text-lg">Ver todas as promoções</a>
+                </div>
             </div>
         </section>
+        <?php endif; ?>
 
         <!-- Vantagens expandidas -->
         <section class="bg-gray-100 py-12 px-4">
             <div class="max-w-7xl mx-auto">
-                <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">Por que escolher a Loja Modelo?</h3>
+                <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">Por que escolher a <?php echo htmlspecialchars($config['nome_empresa'] ?? 'Loja Modelo'); ?>?</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <?php foreach ($vantagens as $vant): ?>
                         <div class="bg-white rounded-xl shadow-md p-8 flex flex-col items-center border border-gray-100">
