@@ -13,7 +13,7 @@
             <?php endif; ?>
         </div>
     </div>
-    <div class="text-xs text-gray-300 mt-2">&copy; <?php echo date('Y'); ?> <?php echo htmlspecialchars($config['nome_empresa'] ?? 'Loja Modelo'); ?>. Feito com ❤️ e Tailwind CSS.</div>
+    <div class="text-xs text-gray-300 mt-2">&copy; <?php echo date('Y'); ?> <?php echo htmlspecialchars($config['nome_empresa'] ?? 'Loja Modelo'); ?>. Feito por Wesley Santos</div>
 </footer>
 
 <?php

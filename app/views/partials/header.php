@@ -70,6 +70,7 @@ if (!empty($_SESSION['carrinho'])) {
     <nav class="bg-white border-t border-gray-100 shadow-sm">
         <div class="container mx-auto px-4 flex items-center justify-center gap-2 md:gap-6">
             <a href="?rota=produtos" class="px-3 py-3 font-medium text-blue-700 hover:bg-blue-50 rounded transition">Produtos</a>
+            <a href="?rota=contato" class="px-3 py-3 font-medium text-blue-700 hover:bg-blue-50 rounded transition">Contato</a>
             <!-- Dropdown Categorias -->
             <div class="relative group">
                 <button type="button" class="px-3 py-3 font-medium text-blue-700 hover:bg-blue-50 rounded transition flex items-center gap-2 focus:outline-none">

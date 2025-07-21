@@ -59,6 +59,9 @@ switch ($rota) {
     case 'checkout':
         include __DIR__ . '/../app/views/checkout.php';
         break;
+    case 'contato':
+        include __DIR__ . '/../app/views/contato.php';
+        break;
     default:
         $controller = new HomeController();
         $controller->index();
