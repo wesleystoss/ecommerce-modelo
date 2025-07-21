@@ -43,66 +43,141 @@ $categorias = Categoria::all($db);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Categorias</title>
     <link href="/css/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-50 min-h-screen flex flex-col">
-    <header class="bg-white shadow p-4 flex justify-between items-center">
-        <h1 class="text-2xl font-bold text-blue-700">Administração - Categorias</h1>
-        <nav>
-            <a href="/admin/" class="text-blue-600 hover:underline">Dashboard</a>
-        </nav>
-    </header>
-    <main class="flex-1 container mx-auto p-8">
-        <h2 class="text-2xl font-bold mb-8">Gerenciar Categorias</h2>
-        <form method="post" class="mb-6 bg-white p-4 rounded shadow grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input type="hidden" name="id" value="<?php echo $editar['id'] ?? ''; ?>">
-            <div>
-                <label class="block mb-1 font-semibold">Nome</label>
-                <input type="text" name="nome" class="border rounded w-full p-2" required value="<?php echo htmlspecialchars($editar['nome'] ?? ''); ?>">
+<body class="bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
+    <?php include __DIR__.'/_sidebar.php'; ?>
+    <div class="pl-64 min-h-screen">
+        <!-- Header -->
+        <header class="bg-white shadow-lg border-b border-gray-200">
+            <div class="container mx-auto px-6 py-4">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-folder text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                                Gerenciar Categorias
+                            </h1>
+                            <p class="text-sm text-gray-600">Administração de Categorias</p>
+                        </div>
+                    </div>
+                    <nav class="flex items-center space-x-6">
+                        <a href="/" class="flex items-center space-x-2 text-gray-600 hover:text-blue-600 transition-colors">
+                            <i class="fas fa-external-link-alt"></i>
+                            <span>Ver Site</span>
+                        </a>
+                    </nav>
+                </div>
             </div>
-            <div>
-                <label class="block mb-1 font-semibold">Ícone (emoji)</label>
-                <input type="text" name="icone" class="border rounded w-full p-2" maxlength="2" placeholder="👕" value="<?php echo htmlspecialchars($editar['icone'] ?? ''); ?>">
+        </header>
+
+        <!-- Main Content -->
+        <main class="container mx-auto px-6 py-8">
+            <!-- Form Section -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 mb-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800">
+                        <?php echo $editar ? 'Editar Categoria' : 'Adicionar Nova Categoria'; ?>
+                    </h2>
+                    <?php if ($editar): ?>
+                        <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
+                            Editando ID: <?php echo $editar['id']; ?>
+                        </span>
+                    <?php endif; ?>
+                </div>
+                
+                <form method="post" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <input type="hidden" name="id" value="<?php echo $editar['id'] ?? ''; ?>">
+                    
+                    <!-- Nome -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-tag mr-2 text-blue-600"></i>Nome da Categoria
+                        </label>
+                        <input type="text" name="nome" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" required value="<?php echo htmlspecialchars($editar['nome'] ?? ''); ?>">
+                    </div>
+                    
+                    <!-- Ícone -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-smile mr-2 text-yellow-600"></i>Ícone (emoji)
+                        </label>
+                        <input type="text" name="icone" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-center text-2xl" maxlength="2" placeholder="👕" value="<?php echo htmlspecialchars($editar['icone'] ?? ''); ?>">
+                    </div>
+                    
+                    <!-- Descrição -->
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-align-left mr-2 text-gray-600"></i>Descrição
+                        </label>
+                        <textarea name="descricao" rows="3" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"><?php echo htmlspecialchars($editar['descricao'] ?? ''); ?></textarea>
+                    </div>
+                    
+                    <!-- Botões -->
+                    <div class="md:col-span-2 flex gap-4 pt-4">
+                        <button type="submit" class="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
+                            <i class="fas fa-save mr-2"></i>
+                            <?php echo $editar ? 'Salvar Alterações' : 'Adicionar Categoria'; ?>
+                        </button>
+                        <?php if ($editar): ?>
+                            <a href="?rota=categorias" class="px-6 py-3 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-all">
+                                <i class="fas fa-times mr-2"></i>Cancelar
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                </form>
             </div>
-            <div class="md:col-span-2">
-                <label class="block mb-1 font-semibold">Descrição</label>
-                <textarea name="descricao" class="border rounded w-full p-2"><?php echo htmlspecialchars($editar['descricao'] ?? ''); ?></textarea>
+
+            <!-- Categories Table -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-800">
+                        <i class="fas fa-list mr-2 text-blue-600"></i>Categorias Cadastradas
+                    </h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ícone</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descrição</th>
+                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <?php foreach ($categorias as $cat): ?>
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="w-12 h-12 bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl flex items-center justify-center text-2xl">
+                                        <?php echo htmlspecialchars($cat['icone']); ?>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-gray-900"><?php echo htmlspecialchars($cat['nome']); ?></div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="text-sm text-gray-500"><?php echo htmlspecialchars($cat['descricao']); ?></div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                                    <div class="flex justify-center space-x-2">
+                                        <a href="?rota=categorias&editar=<?php echo $cat['id']; ?>" class="text-blue-600 hover:text-blue-900 transition-colors">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="?rota=categorias&excluir=<?php echo $cat['id']; ?>" onclick="return confirm('Tem certeza que deseja excluir esta categoria?')" class="text-red-600 hover:text-red-900 transition-colors">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="md:col-span-2 flex gap-2">
-                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                    <?php echo $editar ? 'Salvar Alterações' : 'Adicionar Categoria'; ?>
-                </button>
-                <?php if ($editar): ?>
-                    <a href="?rota=categorias" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400">Cancelar</a>
-                <?php endif; ?>
-            </div>
-        </form>
-        <h3 class="text-lg font-semibold mb-2">Categorias Cadastradas</h3>
-        <table class="w-full bg-white rounded shadow">
-            <thead>
-                <tr>
-                    <th class="p-2 text-left">Nome</th>
-                    <th class="p-2 text-left">Ícone</th>
-                    <th class="p-2 text-left">Descrição</th>
-                    <th class="p-2">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($categorias as $cat): ?>
-                    <tr>
-                        <td class="p-2"><?php echo htmlspecialchars($cat['nome']); ?></td>
-                        <td class="p-2 text-2xl"><?php echo htmlspecialchars($cat['icone']); ?></td>
-                        <td class="p-2"><?php echo htmlspecialchars($cat['descricao']); ?></td>
-                        <td class="p-2 text-center">
-                            <a href="?rota=categorias&editar=<?php echo $cat['id']; ?>" class="text-blue-600 hover:underline mr-2">Editar</a>
-                            <a href="?rota=categorias&excluir=<?php echo $cat['id']; ?>" class="text-red-600 hover:underline" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </main>
-    <footer class="bg-blue-900 text-white p-4 text-center mt-8">
-        &copy; <?php echo date('Y'); ?> Loja Modelo - Admin
-    </footer>
+        </main>
+    </div>
 </body>
 </html> 

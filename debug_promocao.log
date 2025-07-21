@@ -67,3 +67,26 @@ Dados carregados para edição: Array
 )
 
 
+Dados carregados para edição: Array
+(
+    [timestamp] => 2025-07-21 00:22:52
+    [id_buscado] => 10
+    [dados_carregados] => Array
+        (
+            [id] => 10
+            [nome] => Comedouro Inox
+            [descricao] => Comedouro de aço inoxidável, fácil de limpar.
+            [preco] => 24.9
+            [imagem] => https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=400&q=80
+            [categoria_id] => 5
+            [destaque] => 0
+            [tipo_estoque] => ilimitado
+            [estoque] => 0
+            [em_promocao] => 0
+            [preco_promocional] => 
+            [percentual_desconto] => 
+        )
+
+)
+
+
