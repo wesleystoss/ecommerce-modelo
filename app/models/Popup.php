@@ -11,26 +11,28 @@ class Popup {
     }
 
     public static function create($db, $data) {
-        $stmt = $db->prepare('INSERT INTO popups (titulo, conteudo_html, tamanho, tipo, paginas_exibicao, ativo) VALUES (?, ?, ?, ?, ?, ?)');
+        $stmt = $db->prepare('INSERT INTO popups (titulo, conteudo_html, tamanho, tipo, paginas_exibicao, frequencia, ativo) VALUES (?, ?, ?, ?, ?, ?, ?)');
         $stmt->execute([
             $data['titulo'],
             $data['conteudo_html'],
             $data['tamanho'],
             $data['tipo'],
             json_encode($data['paginas_exibicao']), // Salva como JSON
+            $data['frequencia'] ?? 'sempre',
             $data['ativo'] ?? 0
         ]);
         return $db->lastInsertId();
     }
 
     public static function update($db, $id, $data) {
-        $stmt = $db->prepare('UPDATE popups SET titulo=?, conteudo_html=?, tamanho=?, tipo=?, paginas_exibicao=?, ativo=? WHERE id=?');
+        $stmt = $db->prepare('UPDATE popups SET titulo=?, conteudo_html=?, tamanho=?, tipo=?, paginas_exibicao=?, frequencia=?, ativo=? WHERE id=?');
         $stmt->execute([
             $data['titulo'],
             $data['conteudo_html'],
             $data['tamanho'],
             $data['tipo'],
             json_encode($data['paginas_exibicao']), // Salva como JSON
+            $data['frequencia'] ?? 'sempre',
             $data['ativo'] ?? 0,
             $id
         ]);

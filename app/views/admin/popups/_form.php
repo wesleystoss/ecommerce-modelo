@@ -67,6 +67,16 @@ $paginas_selecionadas = isset($popup) ? json_decode($popup['paginas_exibicao'], 
     </div>
 </div>
 
+<!-- Frequência de Exibição -->
+<div class="mb-4">
+    <label for="frequencia" class="block text-gray-700 font-semibold mb-1"><i class="fas fa-clock mr-1"></i> Frequência de Exibição</label>
+    <select name="frequencia" id="frequencia" class="w-full border rounded p-2">
+        <option value="sempre" <?php if(($popup['frequencia'] ?? '') === 'sempre') echo 'selected'; ?>>Sempre exibir</option>
+        <option value="unica_sessao" <?php if(($popup['frequencia'] ?? '') === 'unica_sessao') echo 'selected'; ?>>Exibir uma vez por sessão</option>
+        <option value="diaria" <?php if(($popup['frequencia'] ?? '') === 'diaria') echo 'selected'; ?>>Exibir uma vez por dia</option>
+    </select>
+</div>
+
 <!-- Botões -->
 <div class="md:col-span-2 flex gap-4 pt-4">
     <button type="submit" class="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">

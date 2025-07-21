@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS popups (
     tamanho VARCHAR(50) NOT NULL DEFAULT 'medio',
     tipo VARCHAR(50) NOT NULL DEFAULT 'modal_central',
     paginas_exibicao TEXT,
+    frequencia VARCHAR(50) NOT NULL DEFAULT 'sempre',
     ativo BOOLEAN NOT NULL DEFAULT 0,
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ); 
