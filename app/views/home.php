@@ -49,7 +49,7 @@ function produto_image($produto) {
     <?php include __DIR__ . '/partials/header.php'; ?>
     <main class="flex-1">
         <!-- Hero Carrossel Fullscreen -->
-        <section class="w-full h-[70vh] min-h-[300px] relative overflow-hidden hero-carousel">
+        <section class="w-full h-[70vh] min-h-[300px] relative overflow-hidden hero-carousel bg-white">
             <?php foreach ($banners as $i => $banner): ?>
                 <?php if (!empty($banner['link'])): ?>
                     <a href="<?php echo htmlspecialchars($banner['link']); ?>" target="_blank" class="carousel-slide block w-full h-full absolute top-0 left-0 transition-opacity duration-700 <?php echo $i === 0 ? 'opacity-100 z-20' : 'opacity-0 z-10'; ?>">
@@ -102,49 +102,53 @@ function produto_image($produto) {
 </script>
 
         <!-- Categorias -->
-        <section class="container mx-auto py-12 px-4">
-            <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">Categorias</h3>
-            <div class="flex justify-center">
-                <div class="inline-grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
-                    <?php foreach ($categorias as $cat): ?>
-                        <a href="?rota=produtos&categoria=<?php echo $cat['id']; ?>" class="flex flex-col items-center bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition border border-gray-100 group">
-                            <span class="text-4xl mb-2 group-hover:scale-110 transition"><?php echo $cat['icone']; ?></span>
-                            <span class="font-semibold text-base text-gray-900 group-hover:text-blue-600 transition"><?php echo $cat['nome']; ?></span>
-                        </a>
-                    <?php endforeach; ?>
+        <section class="py-12 px-4 bg-gray-50">
+            <div class="max-w-7xl mx-auto">
+                <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">Categorias</h3>
+                <div class="flex justify-center">
+                    <div class="inline-grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
+                        <?php foreach ($categorias as $cat): ?>
+                            <a href="?rota=produtos&categoria=<?php echo $cat['id']; ?>" class="flex flex-col items-center bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition border border-gray-100 group">
+                                <span class="text-4xl mb-2 group-hover:scale-110 transition"><?php echo $cat['icone']; ?></span>
+                                <span class="font-semibold text-base text-gray-900 group-hover:text-blue-600 transition"><?php echo $cat['nome']; ?></span>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Produtos em destaque -->
-        <section class="container mx-auto py-12 px-4">
-            <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">Produtos em destaque</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                <?php foreach ($produtos as $produto): ?>
-                    <div class="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center border border-gray-100 hover:shadow-xl transition group relative">
-                        <img src="<?php echo produto_image($produto); ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>" class="w-28 h-28 object-cover rounded-xl mb-4 border border-gray-200 group-hover:scale-105 transition">
-                        <h2 class="text-lg font-semibold mb-1 text-gray-900 text-center group-hover:text-blue-600 transition"><?php echo htmlspecialchars($produto['nome']); ?></h2>
-                        <p class="mb-2 text-gray-600 text-center text-sm"><?php echo htmlspecialchars($produto['descricao']); ?></p>
-                        <span class="mb-4 font-bold text-blue-600 text-lg">R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></span>
-                        <a href="?rota=produto&id=<?php echo $produto['id']; ?>" class="block bg-blue-50 text-blue-700 px-4 py-2 rounded-full hover:bg-blue-100 transition text-center font-semibold mb-2">Ver Detalhes</a>
-                        <form method="post" action="?rota=carrinho" class="w-full">
-                            <input type="hidden" name="adicionar_id" value="<?php echo $produto['id']; ?>">
-                            <button type="submit" class="w-full bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition font-bold text-base shadow">Adicionar ao Carrinho</button>
-                        </form>
-                    </div>
-                <?php endforeach; ?>
-                <?php if (empty($produtos)): ?>
-                    <div class="col-span-full text-center text-gray-500">Nenhum produto encontrado.</div>
-                <?php endif; ?>
-            </div>
-            <div class="flex justify-center mt-8">
-                <a href="?rota=produtos" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-full shadow hover:bg-blue-700 transition font-semibold text-lg">Ver todos os produtos</a>
+        <section class="py-12 px-4 bg-white">
+            <div class="max-w-7xl mx-auto">
+                <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">Produtos em destaque</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                    <?php foreach ($produtos as $produto): ?>
+                        <div class="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center border border-gray-100 hover:shadow-xl transition group relative">
+                            <img src="<?php echo produto_image($produto); ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>" class="w-28 h-28 object-cover rounded-xl mb-4 border border-gray-200 group-hover:scale-105 transition">
+                            <h2 class="text-lg font-semibold mb-1 text-gray-900 text-center group-hover:text-blue-600 transition"><?php echo htmlspecialchars($produto['nome']); ?></h2>
+                            <p class="mb-2 text-gray-600 text-center text-sm"><?php echo htmlspecialchars($produto['descricao']); ?></p>
+                            <span class="mb-4 font-bold text-blue-600 text-lg">R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></span>
+                            <a href="?rota=produto&id=<?php echo $produto['id']; ?>" class="block bg-blue-50 text-blue-700 px-4 py-2 rounded-full hover:bg-blue-100 transition text-center font-semibold mb-2">Ver Detalhes</a>
+                            <form method="post" action="?rota=carrinho" class="w-full">
+                                <input type="hidden" name="adicionar_id" value="<?php echo $produto['id']; ?>">
+                                <button type="submit" class="w-full bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition font-bold text-base shadow">Adicionar ao Carrinho</button>
+                            </form>
+                        </div>
+                    <?php endforeach; ?>
+                    <?php if (empty($produtos)): ?>
+                        <div class="col-span-full text-center text-gray-500">Nenhum produto encontrado.</div>
+                    <?php endif; ?>
+                </div>
+                <div class="flex justify-center mt-8">
+                    <a href="?rota=produtos" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-full shadow hover:bg-blue-700 transition font-semibold text-lg">Ver todos os produtos</a>
+                </div>
             </div>
         </section>
 
         <!-- Produtos mais vendidos -->
-        <section class="bg-white py-12 px-4">
-            <div class="container mx-auto">
+        <section class="bg-blue-50 py-12 px-4">
+            <div class="max-w-7xl mx-auto">
                 <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">Mais Vendidos</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
                     <?php foreach ($mais_vendidos as $produto): ?>
@@ -164,40 +168,42 @@ function produto_image($produto) {
         </section>
 
         <!-- Produtos em promoção -->
-        <section class="container mx-auto py-12 px-4">
-            <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">Promoções Especiais</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-                <?php foreach ($promocoes as $produto): ?>
-                    <div class="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center border border-gray-100 hover:shadow-xl transition group relative">
-                        <?php if ($produto['percentual_desconto']): ?>
-                            <div class="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">-<?php echo $produto['percentual_desconto']; ?>%</div>
-                        <?php endif; ?>
-                        <img src="<?php echo produto_image($produto); ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>" class="w-24 h-24 object-cover rounded-xl mb-4 border border-gray-200 group-hover:scale-105 transition">
-                        <h2 class="text-base font-semibold mb-1 text-gray-900 text-center group-hover:text-blue-600 transition"><?php echo htmlspecialchars($produto['nome']); ?></h2>
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-gray-400 line-through text-sm">R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></span>
-                            <span class="font-bold text-red-600 text-lg">R$ <?php echo number_format($produto['preco_promocional'] ?? $produto['preco'], 2, ',', '.'); ?></span>
+        <section class="py-12 px-4 bg-white">
+            <div class="max-w-7xl mx-auto">
+                <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">Promoções Especiais</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                    <?php foreach ($promocoes as $produto): ?>
+                        <div class="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center border border-gray-100 hover:shadow-xl transition group relative">
+                            <?php if ($produto['percentual_desconto']): ?>
+                                <div class="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">-<?php echo $produto['percentual_desconto']; ?>%</div>
+                            <?php endif; ?>
+                            <img src="<?php echo produto_image($produto); ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>" class="w-24 h-24 object-cover rounded-xl mb-4 border border-gray-200 group-hover:scale-105 transition">
+                            <h2 class="text-base font-semibold mb-1 text-gray-900 text-center group-hover:text-blue-600 transition"><?php echo htmlspecialchars($produto['nome']); ?></h2>
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-gray-400 line-through text-sm">R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></span>
+                                <span class="font-bold text-red-600 text-lg">R$ <?php echo number_format($produto['preco_promocional'] ?? $produto['preco'], 2, ',', '.'); ?></span>
+                            </div>
+                            <form method="post" action="?rota=carrinho" class="w-full">
+                                <input type="hidden" name="adicionar_id" value="<?php echo $produto['id']; ?>">
+                                <button type="submit" class="w-full bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition font-bold text-base shadow">Aproveitar Oferta</button>
+                            </form>
                         </div>
-                        <form method="post" action="?rota=carrinho" class="w-full">
-                            <input type="hidden" name="adicionar_id" value="<?php echo $produto['id']; ?>">
-                            <button type="submit" class="w-full bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition font-bold text-base shadow">Aproveitar Oferta</button>
-                        </form>
+                    <?php endforeach; ?>
+                    <?php if (empty($promocoes)): ?>
+                        <div class="col-span-full text-center text-gray-500">Nenhuma promoção disponível no momento.</div>
+                    <?php endif; ?>
+                </div>
+                <?php if (!empty($promocoes)): ?>
+                    <div class="flex justify-center mt-8">
+                        <a href="?rota=produtos&promocao=1" class="inline-block bg-red-500 text-white px-8 py-3 rounded-full shadow hover:bg-red-600 transition font-semibold text-lg">Ver todas as promoções</a>
                     </div>
-                <?php endforeach; ?>
-                <?php if (empty($promocoes)): ?>
-                    <div class="col-span-full text-center text-gray-500">Nenhuma promoção disponível no momento.</div>
                 <?php endif; ?>
             </div>
-            <?php if (!empty($promocoes)): ?>
-                <div class="flex justify-center mt-8">
-                    <a href="?rota=produtos&promocao=1" class="inline-block bg-red-500 text-white px-8 py-3 rounded-full shadow hover:bg-red-600 transition font-semibold text-lg">Ver todas as promoções</a>
-                </div>
-            <?php endif; ?>
         </section>
 
         <!-- Vantagens expandidas -->
         <section class="bg-gray-100 py-12 px-4">
-            <div class="container mx-auto">
+            <div class="max-w-7xl mx-auto">
                 <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">Por que escolher a Loja Modelo?</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <?php foreach ($vantagens as $vant): ?>
@@ -213,7 +219,7 @@ function produto_image($produto) {
 
         <!-- Newsletter -->
         <section class="bg-blue-600 py-12 px-4">
-            <div class="container mx-auto text-center">
+            <div class="max-w-3xl mx-auto text-center">
                 <h3 class="text-2xl font-bold text-white mb-4">Fique por dentro das novidades!</h3>
                 <p class="text-blue-100 mb-6 text-lg">Receba ofertas exclusivas e seja o primeiro a saber sobre novos produtos</p>
                 <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
@@ -224,8 +230,8 @@ function produto_image($produto) {
         </section>
 
         <!-- FAQ -->
-        <section class="bg-gray-100 py-12 px-4">
-            <div class="container mx-auto">
+        <section class="bg-white py-12 px-4">
+            <div class="max-w-4xl mx-auto">
                 <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">Perguntas Frequentes</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                     <?php if (!empty($faqs)): ?>
@@ -244,8 +250,8 @@ function produto_image($produto) {
         </section>
 
         <!-- Depoimentos -->
-        <section class="py-12 px-4">
-            <div class="container mx-auto">
+        <section class="bg-gray-50 py-12 px-4">
+            <div class="max-w-5xl mx-auto">
                 <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">O que dizem nossos clientes</h3>
                 <div class="flex flex-col md:flex-row gap-8 justify-center">
                     <?php if (count($avaliacoes) > 0): ?>
@@ -265,19 +271,21 @@ function produto_image($produto) {
             </div>
         </section>
         <?php if (!empty($config['instagram_url'])): ?>
-        <section class="mx-auto py-12 px-4 bg-gray-100">
-            <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center flex items-center justify-center gap-2">
-                <i class="fab fa-instagram text-pink-500"></i> Siga-nos no Instagram
-            </h3>
-            <div class="flex flex-col items-center">
-                <a href="<?php echo htmlspecialchars($config['instagram_url']); ?>" target="_blank" class="mb-6 inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-pink-500 to-yellow-500 text-white rounded-full font-semibold shadow hover:scale-105 transition">
-                    <i class="fab fa-instagram"></i> @<?php echo preg_replace('~https?://(www\.)?instagram.com/~', '', rtrim($config['instagram_url'], '/')); ?>
-                </a>
-                <div class="w-full flex justify-center">
-                    <!-- Instagram embed -->
-                    <iframe src="https://www.instagram.com/<?php echo preg_replace('~https?://(www\.)?instagram.com/~', '', rtrim($config['instagram_url'], '/')); ?>/embed" width="400" height="480" frameborder="0" scrolling="no" allowtransparency="true" class="rounded-2xl shadow border border-gray-100 bg-white"></iframe>
+        <section class="py-12 px-4 bg-white">
+            <div class="max-w-3xl mx-auto">
+                <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center flex items-center justify-center gap-2">
+                    <i class="fab fa-instagram text-pink-500"></i> Siga-nos no Instagram
+                </h3>
+                <div class="flex flex-col items-center">
+                    <a href="<?php echo htmlspecialchars($config['instagram_url']); ?>" target="_blank" class="mb-6 inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-pink-500 to-yellow-500 text-white rounded-full font-semibold shadow hover:scale-105 transition">
+                        <i class="fab fa-instagram"></i> @<?php echo preg_replace('~https?://(www\.)?instagram.com/~', '', rtrim($config['instagram_url'], '/')); ?>
+                    </a>
+                    <div class="w-full flex justify-center">
+                        <!-- Instagram embed -->
+                        <iframe src="https://www.instagram.com/<?php echo preg_replace('~https?://(www\.)?instagram.com/~', '', rtrim($config['instagram_url'], '/')); ?>/embed" width="400" height="480" frameborder="0" scrolling="no" allowtransparency="true" class="rounded-2xl shadow border border-gray-100 bg-white"></iframe>
+                    </div>
+                    <p class="text-center text-gray-500 mt-4">Veja as últimas novidades e promoções no nosso Instagram!</p>
                 </div>
-                <p class="text-center text-gray-500 mt-4">Veja as últimas novidades e promoções no nosso Instagram!</p>
             </div>
         </section>
         <?php endif; ?>
