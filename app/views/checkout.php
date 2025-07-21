@@ -42,7 +42,16 @@ unset($p);
         <div class="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-8">
             <section class="bg-white/90 rounded-2xl shadow p-8 border border-gray-100 flex flex-col gap-6">
                 <h1 class="text-2xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">Finalizar Compra</h1>
-                <form method="post" class="space-y-4">
+                <?php if (!isset($_SESSION['cliente_id'])): ?>
+                    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded mb-6 flex items-center gap-4">
+                        <i class="fas fa-exclamation-triangle text-2xl"></i>
+                        <div>
+                            <div class="font-bold">É necessário estar logado para finalizar a compra.</div>
+                            <a href="?rota=login" class="inline-block mt-2 bg-blue-600 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700 transition">Fazer Login ou Cadastro</a>
+                        </div>
+                    </div>
+                <?php endif; ?>
+                <form method="post" class="space-y-4" <?php if (!isset($_SESSION['cliente_id'])) echo 'style="pointer-events:none;opacity:0.5;"'; ?>>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label for="nome" class="block text-sm font-semibold mb-1">Nome Completo</label>
@@ -150,7 +159,7 @@ unset($p);
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-bold hover:from-blue-700 hover:to-purple-700 transition flex items-center justify-center gap-2 text-lg mt-4"><i class="fas fa-credit-card"></i> Finalizar Pedido</button>
+                    <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-bold hover:from-blue-700 hover:to-purple-700 transition flex items-center justify-center gap-2 text-lg mt-4" <?php if (!isset($_SESSION['cliente_id'])) echo 'disabled'; ?>><i class="fas fa-credit-card"></i> Finalizar Pedido</button>
                 </form>
             </section>
             <aside class="bg-white/90 rounded-2xl shadow p-8 border border-gray-100 flex flex-col gap-6">
