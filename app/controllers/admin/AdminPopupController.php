@@ -20,7 +20,8 @@ class AdminPopupController {
     public function store() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             Popup::create($this->db, $_POST);
-            header('Location: /admin/popups');
+            header('Location: ?rota=popups');
+            exit;
         }
     }
 
@@ -30,19 +31,22 @@ class AdminPopupController {
             include __DIR__ . '/../../views/admin/popups/edit.php';
         } else {
             // Not found
-            header('Location: /admin/popups');
+            header('Location: ?rota=popups');
+            exit;
         }
     }
 
     public function update($id) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             Popup::update($this->db, $id, $_POST);
-            header('Location: /admin/popups');
+            header('Location: ?rota=popups');
+            exit;
         }
     }
 
     public function delete($id) {
         Popup::delete($this->db, $id);
-        header('Location: /admin/popups');
+        header('Location: ?rota=popups');
+        exit;
     }
 } 
