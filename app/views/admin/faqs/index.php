@@ -86,27 +86,29 @@ error_reporting(E_ALL);
                     <i class="fas fa-list mr-2 text-purple-600"></i>FAQs Cadastradas
                 </h2>
                 <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
+                    <table class="min-w-full divide-y divide-gray-200" id="faq-table">
                         <thead>
                             <tr>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ordem</th>
                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pergunta</th>
                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Resposta</th>
                                 <th class="px-4 py-2"></th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-100">
-                            <?php foreach ($faqs as $faq): ?>
-                                <tr>
-                                    <td class="px-4 py-2 text-sm text-gray-700">#<?php echo $faq['id']; ?></td>
-                                    <td class="px-4 py-2 text-sm text-gray-800 max-w-xs truncate" title="<?php echo htmlspecialchars($faq['pergunta']); ?>"><?php echo htmlspecialchars($faq['pergunta']); ?></td>
-                                    <td class="px-4 py-2 text-sm text-gray-600 max-w-xs truncate" title="<?php echo htmlspecialchars($faq['resposta']); ?>"><?php echo htmlspecialchars($faq['resposta']); ?></td>
-                                    <td class="px-4 py-2 text-right">
-                                        <a href="?rota=faqs&editar=<?php echo $faq['id']; ?>" class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-edit"></i></a>
-                                        <a href="?rota=faqs&excluir=<?php echo $faq['id']; ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('Tem certeza que deseja excluir esta FAQ?');"><i class="fas fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
+                        <tbody class="bg-white divide-y divide-gray-100" id="faq-tbody">
+                            <?php foreach (
+    $faqs as $faq): ?>
+    <?php if (trim((string)($faq['pergunta'] ?? '')) === '' && trim((string)($faq['resposta'] ?? '')) === '') continue; ?>
+    <tr data-id="<?php echo $faq['id']; ?>" class="faq-row cursor-move">
+        <td class="px-4 py-2 text-sm text-gray-500"><i class="fas fa-grip-vertical"></i></td>
+        <td class="px-4 py-2 text-sm text-gray-800 max-w-xs truncate" title="<?php echo htmlspecialchars($faq['pergunta'] ?? ''); ?>"><?php echo htmlspecialchars($faq['pergunta'] ?? ''); ?></td>
+        <td class="px-4 py-2 text-sm text-gray-600 max-w-xs truncate" title="<?php echo htmlspecialchars($faq['resposta'] ?? ''); ?>"><?php echo htmlspecialchars($faq['resposta'] ?? ''); ?></td>
+        <td class="px-4 py-2 text-right">
+            <a href="?rota=faqs&editar=<?php echo $faq['id']; ?>" class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-edit"></i></a>
+            <a href="?rota=faqs&excluir=<?php echo $faq['id']; ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('Tem certeza que deseja excluir esta FAQ?');"><i class="fas fa-trash"></i></a>
+        </td>
+    </tr>
+<?php endforeach; ?>
                             <?php if (empty($faqs)): ?>
                                 <tr>
                                     <td colspan="4" class="px-4 py-6 text-center text-gray-400">Nenhuma FAQ cadastrada.</td>
@@ -115,6 +117,26 @@ error_reporting(E_ALL);
                         </tbody>
                     </table>
                 </div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+                <script>
+                const tbody = document.getElementById('faq-tbody');
+                new Sortable(tbody, {
+                    animation: 150,
+                    handle: '.faq-row',
+                    onEnd: function () {
+                        const ordem = Array.from(tbody.querySelectorAll('tr')).map(tr => tr.getAttribute('data-id'));
+                        fetch('/admin/?rota=faqs', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            body: 'nova_ordem[]=' + ordem.join('&nova_ordem[]=')
+                        }).then(r => r.json()).then(resp => {
+                            if (resp.status === 'ok') {
+                                // Opcional: feedback visual
+                            }
+                        });
+                    }
+                });
+                </script>
             </div>
         </main>
     </div>

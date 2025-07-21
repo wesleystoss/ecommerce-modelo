@@ -1,7 +1,7 @@
 <?php
 class Faq {
     public static function all($db) {
-        return $db->query('SELECT * FROM faqs ORDER BY id DESC')->fetchAll(PDO::FETCH_ASSOC);
+        return $db->query('SELECT * FROM faqs ORDER BY ordem ASC, id ASC')->fetchAll(PDO::FETCH_ASSOC);
     }
     public static function find($db, $id) {
         $stmt = $db->prepare('SELECT * FROM faqs WHERE id = ?');
@@ -15,6 +15,10 @@ class Faq {
     public static function update($db, $id, $data) {
         $stmt = $db->prepare('UPDATE faqs SET pergunta=?, resposta=?, updated_at=CURRENT_TIMESTAMP WHERE id=?');
         $stmt->execute([$data['pergunta'], $data['resposta'], $id]);
+    }
+    public static function updateOrder($db, $id, $ordem) {
+        $stmt = $db->prepare('UPDATE faqs SET ordem=? WHERE id=?');
+        $stmt->execute([$ordem, $id]);
     }
     public static function delete($db, $id) {
         $stmt = $db->prepare('DELETE FROM faqs WHERE id=?');

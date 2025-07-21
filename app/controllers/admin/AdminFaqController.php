@@ -5,6 +5,15 @@ class AdminFaqController {
         require_once __DIR__ . '/../../../app/models/Faq.php';
         $db = getDB();
 
+        // Atualizar ordem via AJAX
+        if (isset($_POST['nova_ordem']) && is_array($_POST['nova_ordem'])) {
+            foreach ($_POST['nova_ordem'] as $ordem => $id) {
+                Faq::updateOrder($db, $id, $ordem+1);
+            }
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'ok']);
+            exit;
+        }
         // Adicionar FAQ
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($_POST['id'])) {
             Faq::create($db, [

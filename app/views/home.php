@@ -230,6 +230,7 @@ function produto_image($produto) {
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                     <?php if (!empty($faqs)): ?>
                         <?php foreach ($faqs as $faq): ?>
+                            <?php if (empty(trim($faq['pergunta'])) || empty(trim($faq['resposta']))) continue; ?>
                             <div class="bg-white rounded-xl shadow-md p-6 border border-gray-100">
                                 <h4 class="font-semibold text-lg mb-2 text-gray-900"><?php echo htmlspecialchars($faq['pergunta']); ?></h4>
                                 <p class="text-gray-600"><?php echo nl2br(htmlspecialchars($faq['resposta'])); ?></p>
