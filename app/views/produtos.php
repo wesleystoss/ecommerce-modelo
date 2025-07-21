@@ -12,6 +12,7 @@ $nome = $_GET['nome'] ?? '';
 $preco_min = $_GET['preco_min'] ?? '';
 $preco_max = $_GET['preco_max'] ?? '';
 $categoria_id = $_GET['categoria'] ?? '';
+$promocao = $_GET['promocao'] ?? '';
 
 $where = [];
 $params = [];
@@ -30,6 +31,9 @@ if ($preco_max !== '') {
 if ($categoria_id) {
     $where[] = 'categoria_id = ?';
     $params[] = $categoria_id;
+}
+if ($promocao) {
+    $where[] = 'em_promocao = 1';
 }
 $sql = 'SELECT * FROM produtos';
 if ($where) {
@@ -86,6 +90,9 @@ function produto_image($produto) {
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col text-gray-900">
     <main class="flex-1 container mx-auto p-4">
+        <?php if ($promocao): ?>
+            <h1 class="text-3xl font-bold text-gray-900 mb-6 text-center">🔥 Produtos em Promoção</h1>
+        <?php endif; ?>
         <form method="get" class="mb-10 bg-white rounded-2xl shadow-md p-8 flex flex-col md:flex-row md:items-end gap-6 border border-gray-100">
             <input type="hidden" name="rota" value="produtos">
             <div class="flex-1">
@@ -109,23 +116,39 @@ function produto_image($produto) {
                 <label class="block text-gray-700 mb-1 font-semibold flex items-center gap-2"><span>💸</span>Preço máximo</label>
                 <input type="number" step="0.01" name="preco_max" value="<?php echo htmlspecialchars($preco_max); ?>" class="border border-gray-300 rounded-lg w-full p-3" placeholder="9999.99">
             </div>
+            <div class="flex items-center gap-2">
+                <input type="checkbox" name="promocao" id="promocao" value="1" <?php if ($promocao) echo 'checked'; ?> class="w-4 h-4">
+                <label for="promocao" class="text-gray-700 font-semibold flex items-center gap-2"><span>🔥</span>Apenas promoções</label>
+            </div>
             <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-full shadow hover:bg-blue-700 transition font-semibold text-lg">Filtrar</button>
         </form>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
             <?php foreach ($produtos as $produto): ?>
                 <div class="relative bg-white rounded-2xl shadow-md border border-gray-100 p-6 flex flex-col items-center hover:shadow-xl hover:scale-105 transition-all duration-200 group min-h-[420px]">
+                    <?php if (!empty($produto['em_promocao']) && !empty($produto['percentual_desconto'])): ?>
+                        <div class="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">-<?php echo $produto['percentual_desconto']; ?>%</div>
+                    <?php endif; ?>
                     <?php if (!empty($produto['destaque'])): ?>
-                        <span class="absolute top-3 right-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg uppercase tracking-wider">Destaque</span>
+                        <span class="absolute top-3 <?php echo !empty($produto['em_promocao']) ? 'left-3' : 'right-3'; ?> bg-gradient-to-r from-yellow-400 to-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg uppercase tracking-wider">Destaque</span>
                     <?php endif; ?>
                     <img src="<?php echo produto_image($produto); ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>" class="w-32 h-32 object-cover rounded-xl mb-4 border border-gray-200 group-hover:scale-110 transition-all duration-200 shadow">
                     <h2 class="text-lg font-semibold mb-1 text-gray-900 text-center group-hover:text-blue-600 transition"><?php echo htmlspecialchars($produto['nome']); ?></h2>
-                    <span class="mb-2 font-bold text-xl text-blue-600 block">R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></span>
+                    <div class="mb-2">
+                        <?php if (!empty($produto['em_promocao']) && !empty($produto['preco_promocional'])): ?>
+                            <span class="text-gray-400 line-through text-sm">R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></span><br>
+                            <span class="font-bold text-red-600 text-lg">R$ <?php echo number_format($produto['preco_promocional'], 2, ',', '.'); ?></span>
+                        <?php else: ?>
+                            <span class="font-bold text-blue-600 text-lg">R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></span>
+                        <?php endif; ?>
+                    </div>
                     <p class="mb-4 text-gray-600 text-center text-sm line-clamp-2 min-h-[38px]"> <?php echo htmlspecialchars($produto['descricao']); ?> </p>
                     <div class="flex flex-col gap-2 w-full mt-auto">
                         <a href="?rota=produto&id=<?php echo $produto['id']; ?>" class="block bg-blue-50 text-blue-700 px-4 py-2 rounded-full hover:bg-blue-100 transition text-center font-semibold shadow">Ver Detalhes</a>
                         <form method="post" action="?rota=carrinho" class="w-full">
                             <input type="hidden" name="produto_id" value="<?php echo $produto['id']; ?>">
-                            <button type="submit" class="w-full bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition font-bold text-base shadow">Adicionar ao Carrinho</button>
+                            <button type="submit" class="w-full <?php echo !empty($produto['em_promocao']) ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'; ?> text-white px-4 py-2 rounded-full transition font-bold text-base shadow">
+                                <?php echo !empty($produto['em_promocao']) ? 'Aproveitar Oferta' : 'Adicionar ao Carrinho'; ?>
+                            </button>
                         </form>
                     </div>
                 </div>

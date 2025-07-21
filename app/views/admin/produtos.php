@@ -2,42 +2,35 @@
 require_once __DIR__ . '/../../../config/database.php';
 require_once __DIR__ . '/../../../app/models/Produto.php';
 require_once __DIR__ . '/../../../app/models/Categoria.php';
+
+// Debug - capturar todos os dados POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $debug_post = [
+        'timestamp' => date('Y-m-d H:i:s'),
+        'method' => $_SERVER['REQUEST_METHOD'],
+        'url' => $_SERVER['REQUEST_URI'],
+        'post_data' => $_POST,
+        'get_data' => $_GET,
+        'has_id' => !empty($_POST['id']),
+        'id_value' => $_POST['id'] ?? 'N/A'
+    ];
+    file_put_contents(__DIR__ . '/../../../debug_promocao.log', "DEBUG POST RECEBIDO: " . print_r($debug_post, true) . "\n\n", FILE_APPEND);
+}
+
 $db = getDB();
 
-// Adicionar produto
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($_POST['id'])) {
-    Produto::create($db, [
-        'nome' => $_POST['nome'],
-        'descricao' => $_POST['descricao'],
-        'preco' => $_POST['preco'],
-        'imagem' => $_POST['imagem'],
-        'categoria_id' => $_POST['categoria_id']
-    ]);
-    header('Location: ?rota=produtos');
-    exit;
-}
-// Editar produto
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['id'])) {
-    Produto::update($db, $_POST['id'], [
-        'nome' => $_POST['nome'],
-        'descricao' => $_POST['descricao'],
-        'preco' => $_POST['preco'],
-        'imagem' => $_POST['imagem'],
-        'categoria_id' => $_POST['categoria_id']
-    ]);
-    header('Location: ?rota=produtos');
-    exit;
-}
-// Excluir produto
-if (isset($_GET['excluir'])) {
-    Produto::delete($db, $_GET['excluir']);
-    header('Location: ?rota=produtos');
-    exit;
-}
 // Buscar produto para edição
 $editar = null;
 if (isset($_GET['editar'])) {
     $editar = Produto::find($db, $_GET['editar']);
+    
+    // Debug - verificar dados carregados
+    $debug_editar = [
+        'timestamp' => date('Y-m-d H:i:s'),
+        'id_buscado' => $_GET['editar'],
+        'dados_carregados' => $editar
+    ];
+    file_put_contents(__DIR__ . '/../../../debug_promocao.log', "Dados carregados para edição: " . print_r($debug_editar, true) . "\n\n", FILE_APPEND);
 }
 $busca_nome = $_GET['busca_nome'] ?? '';
 $busca_id = $_GET['busca_id'] ?? '';
@@ -124,6 +117,29 @@ $categorias = Categoria::all($db);
                 <input type="checkbox" name="destaque" id="destaque" value="1" <?php if (($editar['destaque'] ?? 0) == 1) echo 'checked'; ?>>
                 <label for="destaque" class="font-semibold">Produto em destaque</label>
             </div>
+            <div class="md:col-span-2 flex items-center gap-2">
+                <input type="checkbox" name="em_promocao" id="em_promocao" value="1" <?php if (($editar['em_promocao'] ?? 0) == 1) echo 'checked'; ?> onchange="togglePromocaoFields(this.checked)">
+                <label for="em_promocao" class="font-semibold">Produto em promoção</label>
+                <?php if ($editar): ?>
+                    <span class="text-xs text-gray-500">(Valor atual: <?php echo $editar['em_promocao'] ? 'Sim' : 'Não'; ?>)</span>
+                <?php endif; ?>
+            </div>
+            <div id="promocao_fields" class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4" style="display: <?php echo (($editar['em_promocao'] ?? 0) == 1) ? 'grid' : 'none'; ?>">
+                <div>
+                    <label class="block mb-1 font-semibold">Preço Promocional</label>
+                    <input type="number" step="0.01" name="preco_promocional" class="border rounded w-full p-2" value="<?php echo htmlspecialchars($editar['preco_promocional'] ?? ''); ?>" placeholder="0.00">
+                    <?php if ($editar): ?>
+                        <span class="text-xs text-gray-500">(Valor atual: <?php echo $editar['preco_promocional'] ?? 'N/A'; ?>)</span>
+                    <?php endif; ?>
+                </div>
+                <div>
+                    <label class="block mb-1 font-semibold">Percentual de Desconto (%)</label>
+                    <input type="number" name="percentual_desconto" class="border rounded w-full p-2" value="<?php echo htmlspecialchars($editar['percentual_desconto'] ?? ''); ?>" placeholder="20" min="1" max="99">
+                    <?php if ($editar): ?>
+                        <span class="text-xs text-gray-500">(Valor atual: <?php echo $editar['percentual_desconto'] ?? 'N/A'; ?>%)</span>
+                    <?php endif; ?>
+                </div>
+            </div>
             <div>
                 <label class="block mb-1 font-semibold">Tipo de Estoque</label>
                 <select name="tipo_estoque" class="border rounded w-full p-2" required onchange="this.form.estoque.disabled = (this.value !== 'controlado');">
@@ -170,6 +186,7 @@ $categorias = Categoria::all($db);
                     <th class="p-3 text-left font-bold text-blue-700">Imagem</th>
                     <th class="p-3 text-left font-bold text-blue-700">Descrição</th>
                     <th class="p-3 text-left font-bold text-blue-700">Destaque</th>
+                    <th class="p-3 text-left font-bold text-blue-700">Promoção</th>
                     <th class="p-3 text-left font-bold text-blue-700">Tipo de Estoque</th>
                     <th class="p-3 text-left font-bold text-blue-700">Qtd. Estoque</th>
                     <th class="p-3 font-bold text-blue-700">Ações</th>
@@ -181,7 +198,17 @@ $categorias = Categoria::all($db);
                     <td class="p-3 font-mono text-xs text-gray-500"><?php echo $produto['id']; ?></td>
                     <td class="p-3 font-semibold text-blue-900"><?php echo htmlspecialchars($produto['nome']); ?></td>
                     <td class="p-3"><?php echo htmlspecialchars($produto['categoria_nome'] ?? ''); ?></td>
-                    <td class="p-3 font-bold text-green-700">R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></td>
+                    <td class="p-3 font-bold text-green-700">
+                        <?php if (!empty($produto['em_promocao']) && !empty($produto['preco_promocional'])): ?>
+                            <span class="text-gray-400 line-through text-sm">R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></span><br>
+                            <span class="text-red-600">R$ <?php echo number_format($produto['preco_promocional'], 2, ',', '.'); ?></span>
+                            <?php if (!empty($produto['percentual_desconto'])): ?>
+                                <br><span class="text-xs text-red-500">-<?php echo $produto['percentual_desconto']; ?>%</span>
+                            <?php endif; ?>
+                        <?php else: ?>
+                            R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?>
+                        <?php endif; ?>
+                    </td>
                     <td class="p-3">
                         <?php if (!empty($produto['imagem'])): ?>
                             <img src="<?php echo htmlspecialchars($produto['imagem']); ?>" alt="img" class="w-12 h-12 object-cover rounded shadow">
@@ -196,6 +223,7 @@ $categorias = Categoria::all($db);
                         ?>
                     </td>
                     <td class="p-3 text-center"><?php echo !empty($produto['destaque']) ? '<span class=\'inline-block bg-yellow-400 text-white text-xs font-bold px-2 py-1 rounded shadow\'>Sim</span>' : 'Não'; ?></td>
+                    <td class="p-3 text-center"><?php echo !empty($produto['em_promocao']) ? '<span class=\'inline-block bg-red-500 text-white text-xs font-bold px-2 py-1 rounded shadow\'>Sim</span>' : 'Não'; ?></td>
                     <td class="p-3 text-center"><?php echo ucfirst($produto['tipo_estoque'] ?? 'ilimitado'); ?></td>
                     <td class="p-3 text-center"><?php echo ($produto['tipo_estoque'] ?? 'ilimitado') == 'controlado' ? (int)$produto['estoque'] : '-'; ?></td>
                     <td class="p-3 text-center flex gap-2 justify-center">
@@ -226,6 +254,59 @@ $categorias = Categoria::all($db);
             </div>
         <?php endif; ?>
     </main>
+    <script>
+        function togglePromocaoFields(checked) {
+            const fields = document.getElementById('promocao_fields');
+            fields.style.display = checked ? 'grid' : 'none';
+        }
+        
+        // Debug: verificar se os valores estão sendo carregados
+        document.addEventListener('DOMContentLoaded', function() {
+            const promocaoCheckbox = document.getElementById('em_promocao');
+            const promocaoFields = document.getElementById('promocao_fields');
+            const form = document.querySelector('form');
+            
+            if (promocaoCheckbox && promocaoFields) {
+                console.log('Checkbox promoção:', promocaoCheckbox.checked);
+                console.log('Campos promoção visíveis:', promocaoFields.style.display);
+                
+                // Garantir que os campos sejam exibidos se o checkbox estiver marcado
+                if (promocaoCheckbox.checked) {
+                    promocaoFields.style.display = 'grid';
+                }
+            }
+            
+            // Debug do formulário
+            if (form) {
+                console.log('Formulário encontrado:', form);
+                
+                // Adicionar listener para debug do envio
+                form.addEventListener('submit', function(e) {
+                    console.log('Formulário sendo enviado...');
+                    console.log('Dados do formulário:', new FormData(form));
+                    
+                    // Verificar se há campos obrigatórios vazios
+                    const requiredFields = form.querySelectorAll('[required]');
+                    let hasErrors = false;
+                    
+                    requiredFields.forEach(field => {
+                        if (!field.value.trim()) {
+                            console.error('Campo obrigatório vazio:', field.name);
+                            hasErrors = true;
+                        }
+                    });
+                    
+                    if (hasErrors) {
+                        e.preventDefault();
+                        alert('Por favor, preencha todos os campos obrigatórios.');
+                        return false;
+                    }
+                    
+                    console.log('Formulário válido, enviando...');
+                });
+            }
+        });
+    </script>
     <footer class="bg-blue-900 text-white p-4 text-center mt-8">
         &copy; <?php echo date('Y'); ?> Loja Modelo - Admin
     </footer>

@@ -1,0 +1,69 @@
+Dados carregados para edição: Array
+(
+    [timestamp] => 2025-07-21 00:18:33
+    [id_buscado] => 8
+    [dados_carregados] => Array
+        (
+            [id] => 8
+            [nome] => Brinquedo Mordedor
+            [descricao] => Brinquedo de borracha para saúde bucal do seu pet.
+            [preco] => 19.9
+            [imagem] => https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=400&q=80
+            [categoria_id] => 5
+            [destaque] => 0
+            [tipo_estoque] => ilimitado
+            [estoque] => 0
+            [em_promocao] => 0
+            [preco_promocional] => 
+            [percentual_desconto] => 
+        )
+
+)
+
+
+Dados carregados para edição: Array
+(
+    [timestamp] => 2025-07-21 00:18:48
+    [id_buscado] => 6
+    [dados_carregados] => Array
+        (
+            [id] => 6
+            [nome] => Ração Premium para Cachorros
+            [descricao] => Ração de alta qualidade para todas as raças.
+            [preco] => 89.9
+            [imagem] => https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=400&q=80
+            [categoria_id] => 5
+            [destaque] => 0
+            [tipo_estoque] => ilimitado
+            [estoque] => 0
+            [em_promocao] => 0
+            [preco_promocional] => 
+            [percentual_desconto] => 
+        )
+
+)
+
+
+Dados carregados para edição: Array
+(
+    [timestamp] => 2025-07-21 00:19:01
+    [id_buscado] => 5
+    [dados_carregados] => Array
+        (
+            [id] => 5
+            [nome] => Item teste
+            [descricao] => Descrição de teste para um produto
+            [preco] => 39
+            [imagem] => https://images.unsplash.com/photo-1752694753627-f23b1cbc3ecf?q=80&w=696&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
+            [categoria_id] => 2
+            [destaque] => 1
+            [tipo_estoque] => ilimitado
+            [estoque] => 0
+            [em_promocao] => 1
+            [preco_promocional] => 31.2
+            [percentual_desconto] => 20
+        )
+
+)
+
+

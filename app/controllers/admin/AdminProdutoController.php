@@ -18,7 +18,10 @@ class AdminProdutoController {
                 'categoria_id' => $_POST['categoria_id'],
                 'destaque' => isset($_POST['destaque']) ? 1 : 0,
                 'tipo_estoque' => $tipo_estoque,
-                'estoque' => $estoque
+                'estoque' => $estoque,
+                'em_promocao' => isset($_POST['em_promocao']) ? 1 : 0,
+                'preco_promocional' => !empty($_POST['preco_promocional']) ? $_POST['preco_promocional'] : null,
+                'percentual_desconto' => !empty($_POST['percentual_desconto']) ? $_POST['percentual_desconto'] : null
             ]);
             header('Location: ?rota=produtos');
             exit;
@@ -35,7 +38,10 @@ class AdminProdutoController {
                 'categoria_id' => $_POST['categoria_id'],
                 'destaque' => isset($_POST['destaque']) ? 1 : 0,
                 'tipo_estoque' => $tipo_estoque,
-                'estoque' => $estoque
+                'estoque' => $estoque,
+                'em_promocao' => isset($_POST['em_promocao']) ? 1 : 0,
+                'preco_promocional' => !empty($_POST['preco_promocional']) ? $_POST['preco_promocional'] : null,
+                'percentual_desconto' => !empty($_POST['percentual_desconto']) ? $_POST['percentual_desconto'] : null
             ]);
             header('Location: ?rota=produtos');
             exit;
