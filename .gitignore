@@ -1,0 +1,22 @@
+# Dependências Node
+node_modules/
+package-lock.json
+
+# Dependências Composer
+/vendor/
+composer.lock
+
+# Arquivos temporários
+*.log
+.DS_Store
+.env
+
+# Banco de dados local
+/storage/*.sqlite
+
+# Build de CSS (NÃO ignore se faz deploy do CSS pelo git)
+# public/css/tailwind.min.css
+
+# Outros
+.idea/
+.vscode/ 
