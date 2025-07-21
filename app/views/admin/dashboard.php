@@ -1,3 +1,9 @@
+<?php
+require_once __DIR__ . '/../../../config/database.php';
+require_once __DIR__ . '/../../../app/models/Configuracao.php';
+$db = getDB();
+$config = Configuracao::get($db);
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -15,12 +21,16 @@
             <div class="container mx-auto px-6 py-4">
                 <div class="flex justify-between items-center">
                     <div class="flex items-center space-x-4">
-                        <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-store text-white text-xl"></i>
-                        </div>
+                        <?php if (!empty($config['logo'])): ?>
+                            <img src="<?php echo htmlspecialchars($config['logo']); ?>" alt="Logo" style="max-height:40px; max-width:40px;" class="rounded-lg bg-white">
+                        <?php else: ?>
+                            <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-store text-white text-xl"></i>
+                            </div>
+                        <?php endif; ?>
                         <div>
                             <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                                Loja Modelo
+                                <?php echo htmlspecialchars($config['nome_empresa'] ?? 'Loja Modelo'); ?>
                             </h1>
                             <p class="text-sm text-gray-600">Painel Administrativo</p>
                         </div>

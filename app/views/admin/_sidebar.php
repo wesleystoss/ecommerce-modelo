@@ -1,13 +1,20 @@
 <?php
-// Sidebar fixo para o painel admin
+require_once __DIR__ . '/../../../config/database.php';
+require_once __DIR__ . '/../../../app/models/Configuracao.php';
+$db = getDB();
+$config = Configuracao::get($db);
 ?>
 <aside class="fixed inset-y-0 left-0 w-64 bg-white border-r border-gray-200 shadow-lg flex flex-col z-30">
     <div class="flex items-center gap-3 px-6 py-6 border-b border-gray-100">
-        <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-            <i class="fas fa-store text-white text-2xl"></i>
-        </div>
+        <?php if (!empty($config['logo'])): ?>
+            <img src="<?php echo htmlspecialchars($config['logo']); ?>" alt="Logo" style="max-height:40px; max-width:40px;" class="rounded-lg bg-white">
+        <?php else: ?>
+            <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                <i class="fas fa-store text-white text-2xl"></i>
+            </div>
+        <?php endif; ?>
         <div>
-            <span class="block text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Loja Modelo</span>
+            <span class="block text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"><?php echo htmlspecialchars($config['nome_empresa'] ?? 'Loja Modelo'); ?></span>
             <span class="block text-xs text-gray-500">Painel Admin</span>
         </div>
     </div>
@@ -39,7 +46,7 @@
         </ul>
     </nav>
     <div class="px-6 py-4 border-t border-gray-100 text-xs text-gray-400">
-        &copy; <?php echo date('Y'); ?> Loja Modelo<br>Administração
+        &copy; <?php echo date('Y'); ?> <?php echo htmlspecialchars($config['nome_empresa'] ?? 'Loja Modelo'); ?><br>Administração
     </div>
     <script>
     function sidebarFilter() {
