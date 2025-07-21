@@ -11,95 +11,82 @@ $popups_para_pagina = array_filter($popups, function($p) use ($rota_atual) {
     return in_array($rota_atual, $paginas ?? []);
 });
 if (!empty($popups_para_pagina)):
-    $js_ids = [];
-    foreach ($popups_para_pagina as $popup_ativo) {
+    foreach ($popups_para_pagina as $i => $popup_ativo) {
         $cor_fundo = trim($popup_ativo['cor_fundo'] ?? '');
         $cor_attr = '';
         if ($cor_fundo) {
             if (strpos($cor_fundo, 'bg-') === 0) {
                 $cor_attr = 'class="' . htmlspecialchars($cor_fundo) . '"';
             } else {
-                $cor_attr = 'style="background:' . htmlspecialchars($cor_fundo) . ';"';
+                $cor_attr = 'style=\"background:' . htmlspecialchars($cor_fundo) . ';\"';
             }
         }
         $conteudo = $popup_ativo['conteudo_html'];
         $popup_id = $popup_ativo['id'];
-        $js_ids[] = $popup_id;
         if (strpos($conteudo, 'data-popup-id=') === false) {
-            $conteudo = preg_replace('/^<([a-zA-Z0-9]+)/', '<$1 data-popup-id="' . $popup_id . '"', $conteudo, 1);
+            $conteudo = preg_replace('/^<([a-zA-Z0-9]+)/', '<$1 data-popup-id=\"' . $popup_id . '\"', $conteudo, 1);
         }
         $conteudo = preg_replace('/(<[^>]+data-popup-id=[^>]+)(>)/i', '$1 ' . $cor_attr . '$2', $conteudo, 1);
-        // Wrapper para empilhar (posição será ajustada via JS)
-        echo '<div class="banner-topo-stack" data-banner-id="' . $popup_id . '" style="position:fixed;left:0;width:100%;z-index:100;pointer-events:auto;top:0;">' . $conteudo . '</div>';
+        // Cada banner recebe um data-banner-index para empilhamento
+        echo '<div class="banner-topo-stack" data-banner-id="' . $popup_id . '" data-banner-index="' . $i . '" style="position:fixed;left:0;width:100%;z-index:' . (100 + $i) . ';pointer-events:auto;top:0;">' . $conteudo . '</div>';
     }
+endif;
 ?>
+<style>
+.banner-topo-stack {
+  left: 0;
+  width: 100%;
+  pointer-events: auto;
+  /* z-index e top são definidos inline para empilhamento */
+}
+header.sticky-header-fix {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  z-index: 30;
+  transition: top 0.2s;
+}
+body {
+  /* O padding-top será ajustado via JS */
+}
+</style>
 <script>
 window.addEventListener('DOMContentLoaded', function() {
-  var header = document.querySelector('header');
-  var banners = Array.from(document.querySelectorAll('.banner-topo-stack'));
-  var alturaAcumulada = 0;
-  banners.forEach(function(wrapper, idx) {
-    var banner = wrapper.querySelector('[data-popup-id]');
-    if (!banner) return;
-    // Frequência de exibição
-    var popupId = banner.getAttribute('data-popup-id');
-    var podeExibir = true;
-    function getCookie(name) {
-      const v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-      return v ? v[2] : null;
-    }
-    function setCookie(name, value, days) {
-      let expires = '';
-      if (days) {
-        const d = new Date();
-        d.setTime(d.getTime() + (days*24*60*60*1000));
-        expires = '; expires=' + d.toUTCString();
-      }
-      document.cookie = name + '=' + value + expires + '; path=/';
-    }
-    var frequencia = banner.getAttribute('data-frequencia') || 'sempre';
-    if (frequencia === 'unica_sessao') {
-      if (sessionStorage.getItem('popup_' + popupId)) {
-        podeExibir = false;
+  // Empilha banners e ajusta header
+  function ajustarTopo() {
+    var banners = Array.from(document.querySelectorAll('.banner-topo-stack'));
+    var header = document.querySelector('header');
+    var altura = 0;
+    banners.forEach(function(w, idx){
+      var b = w.querySelector('[data-popup-id]');
+      if(w.style.display !== 'none' && b) {
+        w.style.top = altura + 'px';
+        w.style.zIndex = 100 + idx;
+        altura += b.offsetHeight;
       } else {
-        sessionStorage.setItem('popup_' + popupId, '1');
+        w.style.top = '-9999px';
       }
-    } else if (frequencia === 'diaria') {
-      const cookie = getCookie('popup_' + popupId);
-      if (cookie === '1') {
-        podeExibir = false;
-      } else {
-        setCookie('popup_' + popupId, '1', 1);
-      }
+    });
+    if (header) {
+      header.classList.add('sticky-header-fix');
+      header.style.top = altura + 'px';
     }
-    if (!podeExibir) {
-      wrapper.style.display = 'none';
-      return;
-    }
-    // Ajusta a posição top dinamicamente
-    wrapper.style.top = alturaAcumulada + 'px';
-    alturaAcumulada += banner.offsetHeight;
-    // Botão fechar
-    var btn = banner.querySelector('button[aria-label="Fechar"]');
-    if (btn) {
-      btn.onclick = function() {
-        wrapper.style.display = 'none';
-        // Recalcula altura dos banners visíveis
-        var altura = 0;
-        banners.forEach(function(w){
-          if(w.style.display !== 'none') {
-            var b = w.querySelector('[data-popup-id]');
-            if(b) {
-              w.style.top = altura + 'px';
-              altura += b.offsetHeight;
-            }
-          }
-        });
-        if (header) header.style.marginTop = altura + 'px';
-      }
+    // Ajusta o padding do body para não sobrepor o conteúdo
+    document.body.style.paddingTop = (altura + (header ? header.offsetHeight : 0)) + 'px';
+  }
+  // Fecha banner
+  document.querySelectorAll('.banner-topo-stack button[aria-label="Fechar"]').forEach(function(btn){
+    btn.onclick = function() {
+      var wrapper = btn.closest('.banner-topo-stack');
+      if(wrapper) wrapper.style.display = 'none';
+      setTimeout(ajustarTopo, 10);
     }
   });
-  if (header) header.style.marginTop = alturaAcumulada + 'px';
+  // Recalcula ao redimensionar e ao carregar imagens
+  window.addEventListener('resize', ajustarTopo);
+  setTimeout(ajustarTopo, 200);
+  document.querySelectorAll('.banner-topo-stack img').forEach(function(img){
+    img.addEventListener('load', function(){ setTimeout(ajustarTopo, 10); });
+  });
 });
-</script>
-<?php endif; ?> 
+</script> 
