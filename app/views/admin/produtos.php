@@ -34,6 +34,7 @@ if (isset($_GET['editar'])) {
 }
 $busca_nome = $_GET['busca_nome'] ?? '';
 $busca_id = $_GET['busca_id'] ?? '';
+$busca_promocao = isset($_GET['busca_promocao']) ? (int)$_GET['busca_promocao'] : null;
 $pagina = max(1, (int)($_GET['pagina'] ?? 1));
 $por_pagina = 10;
 $offset = ($pagina - 1) * $por_pagina;
@@ -46,6 +47,10 @@ if ($busca_nome) {
 if ($busca_id) {
     $where[] = 'p.id = ?';
     $params[] = $busca_id;
+}
+if ($busca_promocao !== null) {
+    $where[] = 'p.em_promocao = ?';
+    $params[] = $busca_promocao;
 }
 $sql = 'SELECT p.*, c.nome as categoria_nome FROM produtos p LEFT JOIN categorias c ON p.categoria_id = c.id';
 if ($where) {
@@ -260,6 +265,10 @@ $categorias = Categoria::all($db);
                     <div class="w-32">
                         <input type="number" name="busca_id" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="ID" value="<?php echo htmlspecialchars($_GET['busca_id'] ?? ''); ?>">
                     </div>
+                    <div class="flex items-center space-x-2">
+                        <input type="checkbox" name="busca_promocao" id="busca_promocao" value="1" <?php if (isset($_GET['busca_promocao']) && $_GET['busca_promocao'] == '1') echo 'checked'; ?>>
+                        <label for="busca_promocao" class="text-sm text-red-600 font-medium"><i class="fas fa-percent mr-1"></i>Somente promoção</label>
+                    </div>
                     <div class="flex gap-2">
                         <button type="submit" class="px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-all">
                             <i class="fas fa-search mr-2"></i>Filtrar
@@ -371,18 +380,18 @@ $categorias = Categoria::all($db);
                 <div class="flex justify-center mt-8 p-4">
                     <nav class="inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
                         <?php if ($pagina > 1): ?>
-                            <a href="?rota=produtos&pagina=<?php echo $pagina-1; ?><?php echo $busca_nome ? '&busca_nome='.urlencode($busca_nome) : ''; ?><?php echo $busca_id ? '&busca_id='.urlencode($busca_id) : ''; ?>" class="relative inline-flex items-center px-3 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                            <a href="?rota=produtos&pagina=<?php echo $pagina-1; ?><?php echo $busca_nome ? '&busca_nome='.urlencode($busca_nome) : ''; ?><?php echo $busca_id ? '&busca_id='.urlencode($busca_id) : ''; ?><?php echo $busca_promocao !== null ? '&busca_promocao='.urlencode($busca_promocao) : ''; ?>" class="relative inline-flex items-center px-3 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                                 <i class="fas fa-chevron-left"></i>
                             </a>
                         <?php endif; ?>
                         <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
-                            <a href="?rota=produtos&pagina=<?php echo $i; ?><?php echo $busca_nome ? '&busca_nome='.urlencode($busca_nome) : ''; ?><?php echo $busca_id ? '&busca_id='.urlencode($busca_id) : ''; ?>"
+                            <a href="?rota=produtos&pagina=<?php echo $i; ?><?php echo $busca_nome ? '&busca_nome='.urlencode($busca_nome) : ''; ?><?php echo $busca_id ? '&busca_id='.urlencode($busca_id) : ''; ?><?php echo $busca_promocao !== null ? '&busca_promocao='.urlencode($busca_promocao) : ''; ?>"
                                class="relative inline-flex items-center px-3 py-2 border border-gray-300 bg-white text-sm font-medium <?php echo $i == $pagina ? 'text-blue-600 font-bold bg-blue-50' : 'text-gray-500 hover:bg-gray-50'; ?>">
                                 <?php echo $i; ?>
                             </a>
                         <?php endfor; ?>
                         <?php if ($pagina < $total_paginas): ?>
-                            <a href="?rota=produtos&pagina=<?php echo $pagina+1; ?><?php echo $busca_nome ? '&busca_nome='.urlencode($busca_nome) : ''; ?><?php echo $busca_id ? '&busca_id='.urlencode($busca_id) : ''; ?>" class="relative inline-flex items-center px-3 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                            <a href="?rota=produtos&pagina=<?php echo $pagina+1; ?><?php echo $busca_nome ? '&busca_nome='.urlencode($busca_nome) : ''; ?><?php echo $busca_id ? '&busca_id='.urlencode($busca_id) : ''; ?><?php echo $busca_promocao !== null ? '&busca_promocao='.urlencode($busca_promocao) : ''; ?>" class="relative inline-flex items-center px-3 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                                 <i class="fas fa-chevron-right"></i>
                             </a>
                         <?php endif; ?>
