@@ -118,6 +118,7 @@ function produto_image($produto) {
             </div>
         </section>
 
+        <?php if (!empty($produtos)): ?>
         <!-- Produtos em destaque -->
         <section class="py-12 px-4 bg-white">
             <div class="max-w-7xl mx-auto">
@@ -136,15 +137,13 @@ function produto_image($produto) {
                             </form>
                         </div>
                     <?php endforeach; ?>
-                    <?php if (empty($produtos)): ?>
-                        <div class="col-span-full text-center text-gray-500">Nenhum produto encontrado.</div>
-                    <?php endif; ?>
                 </div>
                 <div class="flex justify-center mt-8">
                     <a href="?rota=produtos" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-full shadow hover:bg-blue-700 transition font-semibold text-lg">Ver todos os produtos</a>
                 </div>
             </div>
         </section>
+        <?php endif; ?>
 
         <!-- Produtos mais vendidos -->
         <section class="bg-blue-50 py-12 px-4">
