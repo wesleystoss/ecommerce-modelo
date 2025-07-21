@@ -12,7 +12,8 @@ class AdminConfiguracaoController {
                 'email' => $_POST['email'],
                 'telefone' => $_POST['telefone'],
                 'endereco' => $_POST['endereco'],
-                'logo_height' => $_POST['logo_height'] ?? 32
+                'logo_height' => $_POST['logo_height'] ?? 32,
+                'instagram_url' => $_POST['instagram_url'] ?? ''
             ]);
             header('Location: ?rota=configuracoes');
             exit;

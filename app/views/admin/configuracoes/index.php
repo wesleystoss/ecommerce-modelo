@@ -107,6 +107,14 @@ error_reporting(E_ALL);
                             <textarea name="endereco" rows="3" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"><?php echo htmlspecialchars($config['endereco'] ?? ''); ?></textarea>
                         </div>
                         
+                        <!-- Instagram -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fab fa-instagram mr-2 text-pink-500"></i>URL do Instagram
+                            </label>
+                            <input type="url" name="instagram_url" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all" placeholder="https://www.instagram.com/sualoja/" value="<?php echo htmlspecialchars($config['instagram_url'] ?? ''); ?>">
+                        </div>
+                        
                         <!-- Botão Salvar -->
                         <div class="pt-4">
                             <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">

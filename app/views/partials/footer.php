@@ -1,4 +1,4 @@
-<footer class="bg-blue-900 text-white p-4 text-center mt-8">
+<footer class="bg-blue-900 text-white p-4 text-center">
     <div class="flex flex-col md:flex-row md:justify-between md:items-center max-w-5xl mx-auto gap-2">
         <div>
             <span class="font-bold"><?php echo htmlspecialchars($config['nome_empresa'] ?? 'Loja Modelo'); ?></span>

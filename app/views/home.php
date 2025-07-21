@@ -244,28 +244,8 @@ function produto_image($produto) {
             </div>
         </section>
 
-        <!-- Instagram/Redes Sociais -->
-        <section class="container mx-auto py-12 px-4">
-            <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">Siga-nos no Instagram</h3>
-            <p class="text-gray-600 text-center mb-8">@lojamodelo</p>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="bg-white rounded-xl shadow-md p-4 border border-gray-100 hover:shadow-xl transition">
-                    <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=300&q=80" alt="Instagram" class="w-full h-48 object-cover rounded-lg">
-                </div>
-                <div class="bg-white rounded-xl shadow-md p-4 border border-gray-100 hover:shadow-xl transition">
-                    <img src="https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=300&q=80" alt="Instagram" class="w-full h-48 object-cover rounded-lg">
-                </div>
-                <div class="bg-white rounded-xl shadow-md p-4 border border-gray-100 hover:shadow-xl transition">
-                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=300&q=80" alt="Instagram" class="w-full h-48 object-cover rounded-lg">
-                </div>
-                <div class="bg-white rounded-xl shadow-md p-4 border border-gray-100 hover:shadow-xl transition">
-                    <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=300&q=80" alt="Instagram" class="w-full h-48 object-cover rounded-lg">
-                </div>
-            </div>
-        </section>
-
         <!-- Depoimentos -->
-        <section class="bg-gray-100 py-12 px-4">
+        <section class="py-12 px-4">
             <div class="container mx-auto">
                 <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">O que dizem nossos clientes</h3>
                 <div class="flex flex-col md:flex-row gap-8 justify-center">
@@ -285,6 +265,23 @@ function produto_image($produto) {
                 </div>
             </div>
         </section>
+        <?php if (!empty($config['instagram_url'])): ?>
+        <section class="mx-auto py-12 px-4 bg-gray-100">
+            <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center flex items-center justify-center gap-2">
+                <i class="fab fa-instagram text-pink-500"></i> Siga-nos no Instagram
+            </h3>
+            <div class="flex flex-col items-center">
+                <a href="<?php echo htmlspecialchars($config['instagram_url']); ?>" target="_blank" class="mb-6 inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-pink-500 to-yellow-500 text-white rounded-full font-semibold shadow hover:scale-105 transition">
+                    <i class="fab fa-instagram"></i> @<?php echo preg_replace('~https?://(www\.)?instagram.com/~', '', rtrim($config['instagram_url'], '/')); ?>
+                </a>
+                <div class="w-full flex justify-center">
+                    <!-- Instagram embed -->
+                    <iframe src="https://www.instagram.com/<?php echo preg_replace('~https?://(www\.)?instagram.com/~', '', rtrim($config['instagram_url'], '/')); ?>/embed" width="400" height="480" frameborder="0" scrolling="no" allowtransparency="true" class="rounded-2xl shadow border border-gray-100 bg-white"></iframe>
+                </div>
+                <p class="text-center text-gray-500 mt-4">Veja as últimas novidades e promoções no nosso Instagram!</p>
+            </div>
+        </section>
+        <?php endif; ?>
     </main>
     <?php include __DIR__ . '/partials/footer.php'; ?>
 </body>
