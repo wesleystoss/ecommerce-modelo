@@ -197,12 +197,22 @@ document.addEventListener('DOMContentLoaded', function() {
     function ajustarStickyFiltro() {
         const header = document.querySelector('header');
         const filtro = document.getElementById('filtro-sidebar');
-        if (header && filtro) {
-            let headerHeight = header.offsetHeight;
-            const topbar = document.querySelector('.topbar, .top-bar, .navbar');
-            if (topbar) headerHeight += topbar.offsetHeight;
-            filtro.style.top = (headerHeight + 16) + 'px'; // 16px extra de espaçamento
+        let totalHeight = 0;
+        // Banner topo
+        const banner = document.querySelector('.banner-topo, .banner_topo, #banner-topo');
+        if (banner) totalHeight += banner.offsetHeight;
+        // Header principal
+        if (header) totalHeight += header.offsetHeight;
+        // Topbar extra
+        const topbar = document.querySelector('.topbar, .top-bar, .navbar');
+        if (topbar) totalHeight += topbar.offsetHeight;
+        // Espaço extra
+        if (banner) {
+            totalHeight += 56; // 32 padrão + 24 extra se houver banner
+        } else {
+            totalHeight += 32;
         }
+        if (filtro) filtro.style.top = totalHeight + 'px';
     }
     ajustarStickyFiltro();
     window.addEventListener('resize', ajustarStickyFiltro);
