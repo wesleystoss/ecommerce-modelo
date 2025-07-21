@@ -14,6 +14,17 @@ spl_autoload_register(function ($class) {
     }
 });
 
+require_once __DIR__ . '/../../app/controllers/admin/AdminCategoriaController.php';
+require_once __DIR__ . '/../../app/controllers/admin/AdminProdutoController.php';
+require_once __DIR__ . '/../../app/controllers/admin/AdminPedidoController.php';
+require_once __DIR__ . '/../../app/controllers/admin/AdminClienteController.php';
+require_once __DIR__ . '/../../app/controllers/admin/AdminCupomController.php';
+require_once __DIR__ . '/../../app/controllers/admin/AdminPopupController.php';
+require_once __DIR__ . '/../../app/controllers/admin/AdminConfiguracaoController.php';
+require_once __DIR__ . '/../../app/controllers/admin/AdminVantagemController.php';
+require_once __DIR__ . '/../../app/controllers/admin/AdminAvaliacaoController.php';
+require_once __DIR__ . '/../../app/controllers/admin/AdminBannerController.php';
+
 $rota = $_GET['rota'] ?? 'dashboard';
 
 switch ($rota) {
@@ -48,6 +59,23 @@ switch ($rota) {
     case 'cupons':
         $controller = new AdminCupomController();
         $controller->index();
+        break;
+    case 'popups':
+        $controller = new AdminPopupController();
+        $acao = $_GET['acao'] ?? null;
+        if ($acao === 'create') {
+            $controller->create();
+        } elseif ($acao === 'edit' && isset($_GET['id'])) {
+            $controller->edit($_GET['id']);
+        } elseif ($acao === 'store') {
+            $controller->store();
+        } elseif ($acao === 'update' && isset($_GET['id'])) {
+            $controller->update($_GET['id']);
+        } elseif ($acao === 'delete' && isset($_GET['id'])) {
+            $controller->delete($_GET['id']);
+        } else {
+            $controller->index();
+        }
         break;
     case 'configuracoes':
         $controller = new AdminConfiguracaoController();
