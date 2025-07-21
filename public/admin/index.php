@@ -24,6 +24,7 @@ require_once __DIR__ . '/../../app/controllers/admin/AdminConfiguracaoController
 require_once __DIR__ . '/../../app/controllers/admin/AdminVantagemController.php';
 require_once __DIR__ . '/../../app/controllers/admin/AdminAvaliacaoController.php';
 require_once __DIR__ . '/../../app/controllers/admin/AdminBannerController.php';
+require_once __DIR__ . '/../../app/controllers/admin/AdminFaqController.php';
 
 $rota = $_GET['rota'] ?? 'dashboard';
 
@@ -79,6 +80,10 @@ switch ($rota) {
         break;
     case 'configuracoes':
         $controller = new AdminConfiguracaoController();
+        $controller->index();
+        break;
+    case 'faqs':
+        $controller = new AdminFaqController();
         $controller->index();
         break;
     default:

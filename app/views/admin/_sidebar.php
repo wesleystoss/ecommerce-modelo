@@ -24,6 +24,7 @@
             <li><a href="?rota=produtos" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-50"><i class="fas fa-box"></i>Produtos</a></li>
             <li><a href="?rota=categorias" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-50"><i class="fas fa-folder"></i>Categorias</a></li>
             <li><a href="?rota=avaliacoes" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-50"><i class="fas fa-star"></i>Avaliações</a></li>
+            <li><a href="?rota=faqs" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-50"><i class="fas fa-question-circle"></i>FAQs</a></li>
             <li><a href="?rota=vantagens" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-50"><i class="fas fa-lightbulb"></i>Vantagens</a></li>
             <li><a href="?rota=pedidos" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-50"><i class="fas fa-shopping-cart"></i>Pedidos</a></li>
             <li><a href="?rota=clientes" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-50"><i class="fas fa-users"></i>Clientes</a></li>

@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../app/models/Configuracao.php';
 require_once __DIR__ . '/../../app/models/Produto.php';
+require_once __DIR__ . '/../../app/models/Faq.php';
 $db = getDB();
 $config = Configuracao::get($db);
 $banners = $db->query('SELECT * FROM banners WHERE ativo = 1 ORDER BY ordem ASC, id DESC')->fetchAll(PDO::FETCH_ASSOC);
@@ -9,6 +10,7 @@ $categorias = $db->query('SELECT * FROM categorias')->fetchAll(PDO::FETCH_ASSOC)
 $produtos = Produto::destaques($db, 0);
 $vantagens = $db->query('SELECT * FROM vantagens')->fetchAll(PDO::FETCH_ASSOC);
 $avaliacoes = $db->query('SELECT * FROM avaliacoes ORDER BY id DESC LIMIT 4')->fetchAll(PDO::FETCH_ASSOC);
+$faqs = Faq::all($db);
 
 // Buscar produtos mais vendidos (simulado)
 $mais_vendidos = $db->query('SELECT * FROM produtos ORDER BY RANDOM() LIMIT 6')->fetchAll(PDO::FETCH_ASSOC);
@@ -226,22 +228,16 @@ function produto_image($produto) {
             <div class="container mx-auto">
                 <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">Perguntas Frequentes</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                    <div class="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-                        <h4 class="font-semibold text-lg mb-2 text-gray-900">Como funciona a entrega?</h4>
-                        <p class="text-gray-600">Entregamos em todo o Brasil com prazo de 3-7 dias úteis. Frete grátis para compras acima de R$ 99.</p>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-                        <h4 class="font-semibold text-lg mb-2 text-gray-900">Posso trocar um produto?</h4>
-                        <p class="text-gray-600">Sim! Aceitamos trocas e devoluções em até 30 dias, sem questionamentos.</p>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-                        <h4 class="font-semibold text-lg mb-2 text-gray-900">Quais formas de pagamento?</h4>
-                        <p class="text-gray-600">Aceitamos cartões de crédito, PIX, boleto bancário e transferência.</p>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-                        <h4 class="font-semibold text-lg mb-2 text-gray-900">Tem garantia?</h4>
-                        <p class="text-gray-600">Todos os produtos têm garantia de fábrica e nossa garantia adicional de 1 ano.</p>
-                    </div>
+                    <?php if (!empty($faqs)): ?>
+                        <?php foreach ($faqs as $faq): ?>
+                            <div class="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+                                <h4 class="font-semibold text-lg mb-2 text-gray-900"><?php echo htmlspecialchars($faq['pergunta']); ?></h4>
+                                <p class="text-gray-600"><?php echo nl2br(htmlspecialchars($faq['resposta'])); ?></p>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <div class="col-span-full text-center text-gray-500">Nenhuma pergunta frequente cadastrada.</div>
+                    <?php endif; ?>
                 </div>
             </div>
         </section>
