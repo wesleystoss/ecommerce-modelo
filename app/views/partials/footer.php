@@ -29,14 +29,14 @@ $popup_ativo = Popup::getActivePopupForPage(getDB(), $rota_atual);
 if ($popup_ativo):
     // Define classes de tamanho com base no DB
     $tamanho_classes = [
-        'pequeno' => 'max-w-md',
-        'medio' => 'max-w-2xl',
-        'grande' => 'max-w-4xl',
+        'pequeno' => 'max-w-md min-w-[300px] min-h-[100px] p-4',
+        'medio' => 'max-w-xl min-w-[400px] min-h-[200px] p-6',
+        'grande' => 'max-w-3xl min-w-[600px] min-h-[300px] p-10',
     ];
-    $classe_tamanho = $tamanho_classes[$popup_ativo['tamanho']] ?? 'max-w-2xl';
+    $classe_tamanho = $tamanho_classes[$popup_ativo['tamanho']] ?? 'max-w-xl min-w-[400px] min-h-[200px] p-6';
 ?>
 <div id="popup-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center">
-    <div id="popup-container" class="bg-white rounded-lg shadow-2xl p-4 relative <?php echo $classe_tamanho; ?> transform transition-all duration-300 scale-95 opacity-0">
+    <div id="popup-container" class="bg-white rounded-lg shadow-2xl relative <?php echo $classe_tamanho; ?> transform transition-all duration-300 scale-95 opacity-0">
         <button id="popup-close" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
         <div class="p-6">
             <?php echo $popup_ativo['conteudo_html']; ?>
