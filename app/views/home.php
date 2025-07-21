@@ -40,6 +40,7 @@ function produto_image($produto) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($config['nome_empresa'] ?? 'Loja Modelo'); ?> - Início</title>
     <link href="/css/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col text-gray-900">
     <?php include __DIR__ . '/partials/header.php'; ?>
@@ -124,7 +125,7 @@ function produto_image($produto) {
                         <span class="mb-4 font-bold text-blue-600 text-lg">R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></span>
                         <a href="?rota=produto&id=<?php echo $produto['id']; ?>" class="block bg-blue-50 text-blue-700 px-4 py-2 rounded-full hover:bg-blue-100 transition text-center font-semibold mb-2">Ver Detalhes</a>
                         <form method="post" action="?rota=carrinho" class="w-full">
-                            <input type="hidden" name="produto_id" value="<?php echo $produto['id']; ?>">
+                            <input type="hidden" name="adicionar_id" value="<?php echo $produto['id']; ?>">
                             <button type="submit" class="w-full bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition font-bold text-base shadow">Adicionar ao Carrinho</button>
                         </form>
                     </div>
@@ -150,7 +151,7 @@ function produto_image($produto) {
                             <h2 class="text-sm font-semibold mb-1 text-gray-900 text-center group-hover:text-blue-600 transition"><?php echo htmlspecialchars($produto['nome']); ?></h2>
                             <span class="mb-2 font-bold text-blue-600 text-base">R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></span>
                             <form method="post" action="?rota=carrinho" class="w-full">
-                                <input type="hidden" name="produto_id" value="<?php echo $produto['id']; ?>">
+                                <input type="hidden" name="adicionar_id" value="<?php echo $produto['id']; ?>">
                                 <button type="submit" class="w-full bg-blue-600 text-white px-3 py-1 rounded-full hover:bg-blue-700 transition font-semibold text-sm shadow">Comprar</button>
                             </form>
                         </div>
@@ -175,7 +176,7 @@ function produto_image($produto) {
                             <span class="font-bold text-red-600 text-lg">R$ <?php echo number_format($produto['preco_promocional'] ?? $produto['preco'], 2, ',', '.'); ?></span>
                         </div>
                         <form method="post" action="?rota=carrinho" class="w-full">
-                            <input type="hidden" name="produto_id" value="<?php echo $produto['id']; ?>">
+                            <input type="hidden" name="adicionar_id" value="<?php echo $produto['id']; ?>">
                             <button type="submit" class="w-full bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition font-bold text-base shadow">Aproveitar Oferta</button>
                         </form>
                     </div>

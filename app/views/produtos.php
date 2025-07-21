@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../app/models/Configuracao.php';
 $config = Configuracao::get($db);
 require_once __DIR__ . '/../../app/models/Categoria.php';
 $categorias = Categoria::all($db);
-include __DIR__ . '/partials/header.php';
+require_once __DIR__ . '/../../app/models/Produto.php';
 
 // Filtros
 $nome = $_GET['nome'] ?? '';
@@ -87,8 +87,10 @@ function produto_image($produto) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produtos - Loja Modelo</title>
     <link href="/css/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col text-gray-900">
+    <?php include __DIR__ . '/partials/header.php'; ?>
     <main class="flex-1 container mx-auto p-4">
         <?php if ($promocao): ?>
             <h1 class="text-3xl font-bold text-gray-900 mb-6 text-center">🔥 Produtos em Promoção</h1>
@@ -145,7 +147,7 @@ function produto_image($produto) {
                     <div class="flex flex-col gap-2 w-full mt-auto">
                         <a href="?rota=produto&id=<?php echo $produto['id']; ?>" class="block bg-blue-50 text-blue-700 px-4 py-2 rounded-full hover:bg-blue-100 transition text-center font-semibold shadow">Ver Detalhes</a>
                         <form method="post" action="?rota=carrinho" class="w-full">
-                            <input type="hidden" name="produto_id" value="<?php echo $produto['id']; ?>">
+                            <input type="hidden" name="adicionar_id" value="<?php echo $produto['id']; ?>">
                             <button type="submit" class="w-full <?php echo !empty($produto['em_promocao']) ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'; ?> text-white px-4 py-2 rounded-full transition font-bold text-base shadow">
                                 <?php echo !empty($produto['em_promocao']) ? 'Aproveitar Oferta' : 'Adicionar ao Carrinho'; ?>
                             </button>

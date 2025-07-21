@@ -12,6 +12,13 @@ if (!isset($categorias)) {
     }
     $categorias = $db->query('SELECT * FROM categorias')->fetchAll(PDO::FETCH_ASSOC);
 }
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$total_items_carrinho = 0;
+if (!empty($_SESSION['carrinho'])) {
+    $total_items_carrinho = count($_SESSION['carrinho']);
+}
 ?>
 <!-- Barra superior -->
 <header class="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-30">
@@ -40,6 +47,11 @@ if (!isset($categorias)) {
         <div class="flex items-center gap-3">
             <a href="?rota=carrinho" class="relative text-blue-700 hover:bg-blue-50 p-2 rounded-full transition">
                 <i class="fas fa-shopping-cart text-2xl"></i>
+                <?php if ($total_items_carrinho > 0): ?>
+                    <span class="absolute top-0 right-0 h-5 w-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                        <?php echo $total_items_carrinho; ?>
+                    </span>
+                <?php endif; ?>
             </a>
             <a href="?rota=login" class="text-blue-700 hover:bg-blue-50 p-2 rounded-full transition">
                 <i class="fas fa-user text-2xl"></i>
