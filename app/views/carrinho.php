@@ -123,11 +123,9 @@ function produto_image($produto) {
                     </div>
                 </div>
                 <div class="space-y-3">
-                    <form method="post" action="?rota=carrinho&finalizar=1">
-                        <button type="submit" class="w-full bg-green-500 text-white px-8 py-4 rounded-full font-bold hover:bg-green-600 transition shadow-lg flex items-center justify-center text-lg">
-                            <i class="fas fa-check-circle mr-2"></i> Finalizar Compra
-                        </button>
-                    </form>
+                    <a href="?rota=checkout" class="w-full bg-green-500 text-white px-8 py-4 rounded-full font-bold hover:bg-green-600 transition shadow-lg flex items-center justify-center text-lg">
+                        <i class="fas fa-check-circle mr-2"></i> Finalizar Compra
+                    </a>
                     <button type="submit" name="atualizar_todos" value="1" class="w-full bg-blue-600 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition shadow-md flex items-center justify-center">
                         <i class="fas fa-sync-alt mr-2"></i> Atualizar Carrinho
                     </button>

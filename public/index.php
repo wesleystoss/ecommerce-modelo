@@ -56,6 +56,9 @@ switch ($rota) {
         $controller = new AdminController();
         $controller->index();
         break;
+    case 'checkout':
+        include __DIR__ . '/../app/views/checkout.php';
+        break;
     default:
         $controller = new HomeController();
         $controller->index();
