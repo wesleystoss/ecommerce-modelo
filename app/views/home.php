@@ -161,7 +161,7 @@ function produto_image($produto) {
                 <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">Produtos em destaque</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                     <?php foreach ($produtos as $produto): ?>
-                        <div class="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center border border-gray-100 hover:shadow-xl transition group relative">
+                        <div class="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center border border-gray-100 hover:shadow-xl transition group relative justify-around">
                             <img src="<?php echo produto_image($produto); ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>" class="w-28 h-28 object-cover rounded-xl mb-4 border border-gray-200 group-hover:scale-105 transition">
                             <h2 class="text-lg font-semibold mb-1 text-gray-900 text-center group-hover:text-blue-600 transition"><?php echo htmlspecialchars($produto['nome']); ?></h2>
                             <p class="mb-2 text-gray-600 text-center text-sm"><?php echo htmlspecialchars($produto['descricao']); ?></p>
@@ -187,7 +187,7 @@ function produto_image($produto) {
                 <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">Mais Vendidos</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
                     <?php foreach ($mais_vendidos as $produto): ?>
-                        <div class="bg-gray-50 rounded-2xl shadow-md p-4 flex flex-col items-center border border-gray-100 hover:shadow-xl transition group relative">
+                        <div class="bg-gray-50 rounded-2xl shadow-md p-4 flex flex-col items-center border border-gray-100 hover:shadow-xl transition group relative justify-around">
                             <div class="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">🔥</div>
                             <img src="<?php echo produto_image($produto); ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>" class="w-20 h-20 object-cover rounded-xl mb-3 border border-gray-200 group-hover:scale-105 transition">
                             <h2 class="text-sm font-semibold mb-1 text-gray-900 text-center group-hover:text-blue-600 transition"><?php echo htmlspecialchars($produto['nome']); ?></h2>
@@ -210,7 +210,7 @@ function produto_image($produto) {
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
                     <?php foreach (
                         $promocoes as $produto): ?>
-                        <div class="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center border border-gray-100 hover:shadow-xl transition group relative">
+                        <div class="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center border border-gray-100 hover:shadow-xl transition group relative justify-around">
                             <?php if ($produto['percentual_desconto']): ?>
                                 <div class="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">-<?php echo $produto['percentual_desconto']; ?>%</div>
                             <?php endif; ?>
