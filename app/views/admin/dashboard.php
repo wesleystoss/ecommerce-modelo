@@ -190,7 +190,12 @@ $config = Configuracao::get($db);
                         </div>
                         <span class="font-medium text-gray-700">Cupons</span>
                     </a>
-                    <li><a href="?rota=paginas" class="block px-4 py-2 hover:bg-blue-50 rounded transition">Configuração de Páginas</a></li>
+                    <a href="?rota=paginas" class="flex items-center p-4 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md hover:border-blue-200 transition-all">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-pager text-blue-600"></i>
+                        </div>
+                        <span class="font-medium text-gray-700">Configuração de Páginas</span>
+                    </a>
                 </div>
             </div>
         </main>        
